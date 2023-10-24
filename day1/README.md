@@ -119,5 +119,22 @@ a2f677f115a8   kovardhan:v1    "/docker-entrypoint.…"   26 seconds ago   Up 26
 f6539b1bc71e   ashuwebui:v1    "/docker-entrypoint.…"   30 seconds ago   Up 29 seconds   80/tcp    ashuc1
 ```
 
+## Docker networking -- 
+
+### removing container 
+
+```
+[ashu@ip-172-31-60-143 webui-app]$ docker  stop ashuc1
+ashuc1
+[ashu@ip-172-31-60-143 webui-app]$ docker  rm ashuc1
+ashuc1
+```
+
+### doing port forwarding 
+
+```
+ docker  run  --name ashuc1 -d  -p  1234:80      ashuwebui:v1 
+```
+
 
 
