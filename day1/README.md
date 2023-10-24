@@ -27,3 +27,8 @@ Server:
   Version:          20.10.25
   API version:      1.41 (minimum version 1.12
 ```
+
+### app containerization 
+
+<img src="appc.png">
+
