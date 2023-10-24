@@ -210,4 +210,10 @@ kustomizeVersion: v5.0.1
 PS C:\Users\humanfirmware\Downloads> .\kubectl.exe  version  --client  -o json
 
 ```
+### Default location of k8s cred file
+<img src="cred.png">
+
+### if we can't change the name of cred file then how to use it 
+
+<img src="cred1.png">
 
