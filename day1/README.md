@@ -169,6 +169,18 @@ ashuc1
 
 <img src="fin.png">
 
+### k8s setup 
+
+<img src="setup.png">
+
+### aks node pool concept 
+
+<img src="np.png">
+
+### k8s is adopting CNI as Networking model for containers
+
+<img src="cni.png">
+
 
 
 
