@@ -136,5 +136,8 @@ ashuc1
  docker  run  --name ashuc1 -d  -p  1234:80      ashuwebui:v1 
 ```
 
+## Introduction to kubernetres 
+<img src="k8s1.png">
+
 
 
