@@ -103,5 +103,21 @@ nginx          latest    bc649bab30d1   12 days ago          187MB
 [ashu@ip-172-31-60-143 webui-app]$ 
 ```
 
+### Creating container from image 
+
+```
+[ashu@ip-172-31-60-143 webui-app]$ docker  run  --name ashuc1 -d  ashuwebui:v1  
+f6539b1bc71e0efa4de09f061779827d598af66fb40c0f1363eb3a74b4bf4fa2
+
+=====> list running containers
+
+[ashu@ip-172-31-60-143 webui-app]$ docker  ps
+CONTAINER ID   IMAGE           COMMAND                  CREATED          STATUS          PORTS     NAMES
+d16ed5f9c3a6   docapp:v1       "/docker-entrypoint.…"   23 seconds ago   Up 22 seconds   80/tcp    meghac1
+2188ad6017d3   rahulwebui:v1   "/docker-entrypoint.…"   25 seconds ago   Up 24 seconds   80/tcp    rahulcontainer1
+a2f677f115a8   kovardhan:v1    "/docker-entrypoint.…"   26 seconds ago   Up 26 seconds   80/tcp    kovardhan
+f6539b1bc71e   ashuwebui:v1    "/docker-entrypoint.…"   30 seconds ago   Up 29 seconds   80/tcp    ashuc1
+```
+
 
 
