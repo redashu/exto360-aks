@@ -139,5 +139,36 @@ ashuc1
 ## Introduction to kubernetres 
 <img src="k8s1.png">
 
+### problem to solve 
+
+<img src="pr.png">
+
+### Info about k8s 
+
+<img src="info.png">
+
+## k8s architecture 
+
+<img src="k8sarch1.png">
+
+### k8s client 
+
+<img src="k8scl.png">
+
+### Understanding k8s controll plane components
+
+<img src="k8s22.png">
+
+### API-server on controll plane
+
+<img src="apis.png">
+
+### k8s slave/worker/minion/node / dataplane 
+
+<img src="node.png">
+
+<img src="fin.png">
+
+
 
 
