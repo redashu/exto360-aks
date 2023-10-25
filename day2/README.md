@@ -102,3 +102,111 @@ Removing intermediate container fc3ba480961d
 ```
 
 
+### creating container to test app is working or not 
+
+```
+[ashu@ip-172-31-60-143 webui-app]$ docker images  | grep ashu
+ashuwebapp       extov1     2f46b8ecc1dd   27 minutes ago      493MB
+ashupython       v2         b03989717f95   44 minutes ago      50.7MB
+ashupython       v1         c4bd1076b35d   About an hour ago   1.02GB
+ashu             httpdv1    26c5e3ea9393   About an hour ago   492MB
+[ashu@ip-172-31-60-143 webui-app]$ 
+[ashu@ip-172-31-60-143 webui-app]$ docker run --name ashuweb -d  -p 1199:80  ashuwebapp:extov1 
+2824c89d6cd41888b3f2d5d8632c1b8789158590ac3841246707d599a844133e
+[ashu@ip-172-31-60-143 webui-app]$ 
+[ashu@ip-172-31-60-143 webui-app]$ docker  ps
+CONTAINER ID   IMAGE               COMMAND                  CREATED          STATUS          PORTS                                   NAMES
+2824c89d6cd4   ashuwebapp:extov1   "httpd -DFOREGROUND"     30 seconds ago   Up 29 seconds   0.0.0.0:1199->80/tcp, :::1199->80/tcp   ashuweb
+```
+
+## Container registry options 
+
+<img src="reg.png">
+
+### Docker hub image format
+
+<img src="dh.png">
+
+### pushing image to docker hub 
+
+```
+[ashu@ip-172-31-60-143 webui-app]$ docker  images  | grep ashu
+ashuwebapp        extov1     2f46b8ecc1dd   53 minutes ago      493MB
+ashupython        v2         b03989717f95   About an hour ago   50.7MB
+ashupython        v1         c4bd1076b35d   About an hour ago   1.02GB
+ashu              httpdv1    26c5e3ea9393   2 hours ago         492MB
+
+======>>
+
+[ashu@ip-172-31-60-143 webui-app]$ 
+[ashu@ip-172-31-60-143 webui-app]$ 
+[ashu@ip-172-31-60-143 webui-app]$ docker  tag  ashuwebapp:extov1   docker.io/dockerashu/ashuwebexto:version1  
+[ashu@ip-172-31-60-143 webui-app]$ 
+[ashu@ip-172-31-60-143 webui-app]$ docker  tag  2f46b8ecc1dd   docker.io/dockerashu/ashuwebexto:version1  
+[ashu@ip-172-31-60-143 webui-app]$
+
+========>>>
+
+[ashu@ip-172-31-60-143 webui-app]$ docker  login 
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username: dockerashu
+Password: 
+WARNING! Your password will be stored unencrypted in /home/ashu/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+
+========>>
+
+ docker  push  docker.io/dockerashu/ashuwebexto:version1 
+The push refers to repository [docker.io/dockerashu/ashuwebexto]
+2710c408246a: Pushed 
+fa0378cda19c: Pushed 
+2d3586eacb61: Mounted from anandh2607/anandwebgaea 
+version1: digest: sha256:aeb01597c5d5d9d175815df7d56a6fd3e3ec9
+
+====>>
+
+```
+
+### pushing image to ACR 
+
+```
+ashu@ip-172-31-60-143 webui-app]$ docker  tag  ashuwebapp:extov1   extoaksashu.azurecr.io/ashuwebui:appv1  
+[ashu@ip-172-31-60-143 webui-app]$
+
+======>>>
+
+[ashu@ip-172-31-60-143 webui-app]$ docker  login  extoaksashu.azurecr.io  
+Username: extoaksashu
+Password: 
+WARNING! Your password will be stored unencrypted in /home/ashu/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+
+=====>>>
+
+[ashu@ip-172-31-60-143 webui-app]$ docker  push extoaksashu.azurecr.io/ashuwebui:appv1 
+The push refers to repository [extoaksashu.azurecr.io/ashuwebui]
+2710c408246a: Pushed 
+fa0378cda19c: Pushed 
+2d3586eacb61: Pushed 
+appv1: digest: sha256:aeb01597c5d5d9d175815df7d56a6fd3e3ec91ff4b8493f1c2b5d77bd9264234 size: 952
+
+
+```
+
+### Good practise to logout accounts
+
+```
+[ashu@ip-172-31-60-143 webui-app]$ docker logout  extoaksashu.azurecr.io 
+Removing login credentials for extoaksashu.azurecr.io
+[ashu@ip-172-31-60-143 webui-app]$ 
+[ashu@ip-172-31-60-143 webui-app]$ 
+[ashu@ip-172-31-60-143 webui-app]$ 
+[ashu@ip-172-31-60-143 webui-app]$ docker logout 
+Removing login credentials for https://index.docker.io/v1/
+```
