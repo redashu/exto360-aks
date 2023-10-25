@@ -404,3 +404,72 @@ shalpod      1/1     Running       0          33m
 shilpapod1   1/1     Terminating   0          33m
 sivapod1     1/1     Running       0          37m
 ```
+
+### generating yaml/json using kubectl 
+
+```
+[ashu@ip-172-31-60-143 ~]$ kubectl   run  ashupodx1 --image=dockerashu/ashuwebexto:version1 --port 80 --dry-run=client -o yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: ashupodx1
+  name: ashupodx1
+spec:
+  containers:
+  - image: dockerashu/ashuwebexto:version1
+    name: ashupodx1
+    ports:
+    - containerPort: 80
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+[ashu@ip-172-31-60-143 ~]$ kubectl   run  ashupodx1 --image=dockerashu/ashuwebexto:version1 --port 80 --dry-run=client -o json 
+{
+    "kind": "Pod",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "ashupodx1",
+        "creationTimestamp": null,
+        "labels": {
+            "run": "ashupodx1"
+        }
+    },
+    "spec": {
+        "containers": [
+            {
+                "name": "ashupodx1",
+                "image": "dockerashu/ashuwebexto:version1",
+                "ports": [
+                    {
+                        "containerPort": 80
+                    }
+                ],
+                "resources": {}
+            }
+        ],
+        "restartPolicy": "Always",
+        "dnsPolicy": "ClusterFirst"
+    },
+    "status": {}
+}
+
+```
+
+### redirect it into a file
+
+```
+kubectl   run  ashupodx1 --image=dockerashu/ashuwebexto:version1 --port 80 --dry-run=client -o yaml      >autopod.yaml
+```
+
+### deleting a pod 
+
+```
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  delete pod ashupod1
+pod "ashupod1" deleted
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  delete -f ashupod1.yaml  
+
+```
+
