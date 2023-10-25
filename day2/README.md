@@ -210,3 +210,11 @@ Removing login credentials for extoaksashu.azurecr.io
 [ashu@ip-172-31-60-143 webui-app]$ docker logout 
 Removing login credentials for https://index.docker.io/v1/
 ```
+### how container / pod is getting created
+
+<img src="how.png">
+
+### Introduction to pod 
+
+<img src="pod1.png">
+
