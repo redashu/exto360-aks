@@ -56,3 +56,33 @@ Removing intermediate container 9a32f710b7b5
 Successfully built c4bd1076b35d
 Successfully tagged ashupython:v1
 ```
+
+### creating container 
+
+```
+ashu@ip-172-31-60-143 ashu-python]$ docker  run  -dit  --name ashuc11   ashupython:v1 
+\9f6406ee1fe931e723bb9a344699e2325fb67f92c2c8b1f378c2c7e3bb733750
+[ashu@ip-172-31-60-143 ashu-python]$ docker  ps
+CONTAINER ID   IMAGE              COMMAND                  CREATED              STATUS                  PORTS     NAMES
+7e671f74b1ea   sivapy:v1          "/bin/sh -c 'python …"   2 seconds ago        Up Less than a second             SivA
+394de566afd3   rahulpython:v1     "/bin/sh -c 'python …"   2 seconds ago        Up Less than a second             rahulc1
+af45fa6fd29d   praveenpython:v1   "/bin/sh -c 'python …"   3 seconds ago        Up 1 second                       praveenC11
+9f6406ee1fe9   ashupython:v1      "/bin/sh -c 'python …"   5 seconds ago        Up 4 seconds                      ashuc11
+7d5deb98ed91   kovardhan:v1       "python3"                13 seconds ago       Up 11 seconds                     kovardhanPython
+8f8c03afdb6f   shilpapython:v1    "/bin/sh -c 'python …"   54 seconds ago       Up 52 seconds                     shlpaC2
+31d9f635628b   meghapython:v1     "/bin/sh -c 'python …"   About a minute ago   Up About a minute                 meghacontainer2
+```
+
+### checking output 
+
+```
+[ashu@ip-172-31-60-143 ashu-python]$ docker  logs  ashuc11 
+Hello all , welcome to python..!!
+Welcome to Exto..
+Welcome to Containers ..!!
+______________________
+Hello all , welcome to python..!!
+Welcome to Exto..
+Welcome to Containers ..!!
+```
+
