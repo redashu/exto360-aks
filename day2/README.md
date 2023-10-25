@@ -546,5 +546,27 @@ ashu-deploy1         1/1     1            1           13m
 ko-deploy1           1/1     1            1           13m
 ```
 
+## Creating namepsace and setting it default
+
+```
+ashu@ip-172-31-60-143 k8s-res-design]$ kubectl   create   namespace  ashu-project
+namespace/ashu-project created
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  get  ns
+NAME              STATUS   AGE
+ashu-project      Active   7s
+calico-system     Active   24h
+default           Active   24h
+kube-node-lease   Active   24h
+kube-public       Active   24h
+kube-system       Active   24h
+siva              Active   51s
+tigera-operator   Active   24h
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl get  po
+No resources found in default namespace.
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  config  set-context --current --namespace ashu-project
+Context "ext-360-cluster" modified.
+[ashu@ip-172-31-60-143 k8s-res-design]$ 
+```
+
 
 
