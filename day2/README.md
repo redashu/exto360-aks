@@ -86,3 +86,19 @@ Welcome to Exto..
 Welcome to Containers ..!!
 ```
 
+### building docker image 
+
+```
+[ashu@ip-172-31-60-143 webui-app]$ ls
+Dockerfile  httpd.dockerfile  project-html-website
+[ashu@ip-172-31-60-143 webui-app]$ docker  build  -t  ashuwebapp:extov1  -f  httpd.dockerfile   .  
+Sending build context to Docker daemon  835.1kB
+Step 1/6 : FROM oraclelinux:8.4
+ ---> 97e22ab49eea
+Step 2/6 : LABEL name="ashutoshh"
+ ---> Running in fc3ba480961d
+Removing intermediate container fc3ba480961d
+ ---> b008e48c4d24
+```
+
+
