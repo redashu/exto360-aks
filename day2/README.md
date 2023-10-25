@@ -222,4 +222,112 @@ Removing login credentials for https://index.docker.io/v1/
 
 <img src="pod2.png">
 
+### Desing of pod 
+
+<img src="des.png">
+
+## Creating YAML manifest file 
+
+### POD 
+
+```
+apiVersion: v1 
+kind: Pod 
+metadata:
+  name: ashupod1 # name of my pod 
+spec: # all the elements which i want in my pod 
+  containers: # here we write info about our containers
+  - name: ashuc1 
+    image: dockerashu/ashuwebexto:version1 # image from docker hub
+    ports: # optional part 
+    - containerPort: 80 
+
+   
+```
+
+### send create request to control plane -- APiserver
+
+```
+[ashu@ip-172-31-60-143 k8s-res-design]$ ls
+ashupod1.yaml
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl   get  pods
+No resources found in default namespace.
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl   create  -f  ashupod1.yaml 
+pod/ashupod1 created
+[ashu@ip-172-31-60-143 k8s-res-design]$ 
+```
+
+### checking pods
+
+```
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  get  pods
+NAME         READY   STATUS              RESTARTS   AGE
+amitpod1     1/1     Running             0          10m
+anandpod1    0/1     ContainerCreating   0          11s
+arvindpod1   1/1     Running             0          2m1s
+ashupod1     1/1     Running             0          10m
+kopod1       1/1     Running             0          35s
+meghapod1    1/1     Running             0          3m51s
+praveen      1/1     Running             0          2m22s
+rahulpod1    1/1     Running             0          10m
+shalpod      1/1     Running             0          6m53s
+shilpapod1   1/1     Running             0          7m19s
+sivapod1     1/1     Running             0          10m
+```
+
+### checking pod got scheduled in which node 
+
+```
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl   get  pod  ashupod1  -o wide
+NAME       READY   STATUS    RESTARTS   AGE   IP           NODE                                NOMINATED NODE   READINESS GATES
+ashupod1   1/1     Running   0          12m   10.244.1.2   aks-agentpool-39082632-vmss000003   <none>           <none>
+[ashu@ip-172-31-60-143 k8s-res-design]$ 
+[ashu@ip-172-31-60-143 k8s-res-design]$ 
+[ashu@ip-172-31-60-143 k8s-res-design]$ 
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl   get node
+NAME                                STATUS   ROLES   AGE     VERSION
+aks-agentpool-39082632-vmss000002   Ready    agent   5h47m   v1.26.6
+aks-agentpool-39082632-vmss000003   Ready    agent   5h47m   v1.26.6
+[ashu@ip-172-31-60-143 k8s-res-design]$ 
+```
+
+### all pods
+
+```
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl   get  pod  -o wide
+NAME         READY   STATUS    RESTARTS   AGE     IP            NODE                                NOMINATED NODE   READINESS GATES
+amitpod1     1/1     Running   0          14m     10.244.1.5    aks-agentpool-39082632-vmss000003   <none>           <none>
+anandpod1    1/1     Running   0          3m37s   10.244.1.10   aks-agentpool-39082632-vmss000003   <none>           <none>
+arvindpod1   1/1     Running   0          5m27s   10.244.1.9    aks-agentpool-39082632-vmss000003   <none>           <none>
+ashupod1     1/1     Running   0          14m     10.244.1.2    aks-agentpool-39082632-vmss000003   <none>           <none>
+kopod1       1/1     Running   0          4m1s    10.244.0.11   aks-agentpool-39082632-vmss000002   <none>           <none>
+meghapod1    1/1     Running   0          7m17s   10.244.1.8    aks-agentpool-39082632-vmss000003   <none>           <none>
+praveen      1/1     Running   0          5m48s   10.244.0.10   aks-agentpool-39082632-vmss000002   <none>           <none>
+rahulpod1    1/1     Running   0          14m     10.244.1.3    aks-agentpool-39082632-vmss000003   <none>           <none>
+shalpod      1/1     Running   0          10m     10.244.1.7    aks-agentpool-39082632-vmss000003   <none>           <none>
+shilpapod1   1/1     Running   0          10m     10.244.1.6    aks-agentpool-39082632-vmss000003   <none>           <none>
+sivapod1     1/1     Running   0          14m     10.244.1.4    aks-agentpool-39082632-vmss000003   <none>           <none>
+```
+
+### checking logs of pod container 
+
+```
+kubectl  logs ashupod1 
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 10.244.1.2. Set the 'ServerName' directive globally to suppress this message
+```
+
+### accessing container inside pod 
+
+```
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  exec  -it  ashupod1 -- bash 
+[root@ashupod1 /]# 
+[root@ashupod1 /]# 
+[root@ashupod1 /]# 
+[root@ashupod1 /]# cd  /var/www/html/
+[root@ashupod1 html]# ls
+css  fonts  img  index.html
+[root@ashupod1 html]# exit
+exit
+```
+
 
