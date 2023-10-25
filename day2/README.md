@@ -473,3 +473,78 @@ pod "ashupod1" deleted
 
 ```
 
+### COntroller in k8s
+
+<img src="k8sc.png">
+
+### type of apps and their relevant controller 
+
+<img src="cont.png">
+
+### Introduction to deployment controller for statelesss apps
+
+<img src="stl.png">
+
+### Creating deployment controller yaml file 
+
+```
+ kubectl   create  deployment  ashu-deploy1  --image=dockerashu/ashuwebexto:version1 --port 80 --dry-run=client  -o yaml   >deploy1.yaml 
+```
+
+### send create request
+
+```
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  create -f deploy1.yaml 
+deployment.apps/ashu-deploy1 created
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  get  deployment
+NAME             READY   UP-TO-DATE   AVAILABLE   AGE
+amit-deploy1     1/1     1            1           15s
+ananddeploy1     1/1     1            1           5s
+ashu-deploy1     1/1     1            1           22s
+ko-deploy1       1/1     1            1           18s
+rahul-deploy1    1/1     1            1           17s
+shilpa-deploy1   1/1     1            1           4s
+siva-deploy1     1/1     1            1           7m25s
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl   get  pods
+NAME                              READY   STATUS    RESTARTS   AGE
+amit-deploy1-c6f5c58ff-d8rsv      1/1     Running   0          78s
+ananddeploy1-f5c67cb77-p5xh4      1/1     Running   0          68s
+ashu-deploy1-5ccff9465f-6krfb     1/1     Running   0          85s
+ko-deploy1-5d57cc5dcd-gv4mn       1/1     Running   0          81s
+rahul-deploy1-69bd7ffcc8-qhf7j    1/1     Running   0          80s
+shilpa-deploy1-6cbdd8c8c6-d8ftv   1/1     Running   0          67s
+siva-deploy1-d57c86897-j9bmq      1/1     Running   0          8m28s
+```
+
+### deleting pod -- got recreated 
+
+```
+
+[ashu@ip-172-31-60-143 ~]$ kubectl  delete pod ashu-deploy1-5ccff9465f-6krfb
+pod "ashu-deploy1-5ccff9465f-6krfb" deleted
+[ashu@ip-172-31-60-143 ~]$ kubectl  get  pods
+NAME                                 READY   STATUS    RESTARTS   AGE
+amit-deploy1-c6f5c58ff-d8rsv         1/1     Running   0          4m46s
+ananddeploy1-f5c67cb77-p5xh4         1/1     Running   0          4m36s
+arvind-deploy1-65dfc965dc-8mjz9      1/1     Running   0          2m55s
+ashu-deploy1-5ccff9465f-8mdxm        1/1     Running   0          6s
+ko-deploy1-5d57cc5dcd-gv4mn          1/1     Running   0          4m49s
+
+```
+
+### scaling pod 
+
+```
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl   scale deployment  ashu-deploy1  --replicas=1
+deployment.apps/ashu-deploy1 scaled
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  get  deploy 
+NAME                 READY   UP-TO-DATE   AVAILABLE   AGE
+amit-deploy1         1/1     1            1           13m
+ananddeploy1         1/1     1            1           12m
+arvind-deploy1       1/1     1            1           11m
+ashu-deploy1         1/1     1            1           13m
+ko-deploy1           1/1     1            1           13m
+```
+
+
+
