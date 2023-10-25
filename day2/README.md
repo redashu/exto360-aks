@@ -218,3 +218,8 @@ Removing login credentials for https://index.docker.io/v1/
 
 <img src="pod1.png">
 
+### more info about pod 
+
+<img src="pod2.png">
+
+
