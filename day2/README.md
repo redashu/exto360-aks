@@ -330,4 +330,77 @@ css  fonts  img  index.html
 exit
 ```
 
+### using describe for troubleshooting 
 
+```
+[ashu@ip-172-31-60-143 ~]$ kubectl   describe  pod  ashupod2
+Name:             ashupod2
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             aks-agentpool-39082632-vmss000003/10.224.0.4
+Start Time:       Wed, 25 Oct 2023 10:05:09 +0000
+Labels:           <none>
+Annotations:      cni.projectcalico.org/containerID: d3ab652efaac3f9690ba60afb5caaff7e5c7bbbd5b626813491b46d55942917d
+                  cni.projectcalico.org/podIP: 10.244.1.11/32
+                  cni.projectcalico.org/podIPs: 10.244.1.11/32
+Status:           Pending
+IP:               10.244.1.11
+IPs:
+  IP:  10.244.1.11
+Containers:
+  ashuc1:
+    Container ID:   
+    Image:          extoaksashu.azurecr.io/ashuwebui:appv1
+    Image ID:       
+    Port:           80/TCP
+    Host Port:      0/TCP
+
+```
+
+### Multi container pod 
+
+```
+apiVersion: v1 
+kind: Pod 
+metadata:
+  name: ashupod1 # name of my pod 
+spec: # all the elements which i want in my pod 
+  containers: # here we write info about our containers
+  - name: ashuc2 
+    image: alpine 
+    command: ['sleep','1200'] # to modify existing cmd/ENTRYPOINT by dockerfile 
+  - name: ashuc1 
+    image: dockerashu/ashuwebexto:version1 # image from docker hub
+    ports: # optional part 
+    - containerPort: 80 
+
+   
+```
+
+
+### replace it 
+
+```
+kubectl  replace -f  ashupod1.yaml   --force
+pod "ashupod1" deleted
+pod/ashupod1 replaced
+```
+
+### checking it
+
+```
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  get  pods
+NAME         READY   STATUS        RESTARTS   AGE
+amitpod1     2/2     Running       0          24s
+anandpod1    1/1     Running       0          26m
+arvindpod1   1/1     Running       0          28m
+ashupod1     2/2     Running       0          45s
+kopod1       1/1     Running       0          26m
+meghapod1    1/1     Running       0          30m
+praveen      1/1     Running       0          28m
+rahulpod1    2/2     Running       0          30s
+shalpod      1/1     Running       0          33m
+shilpapod1   1/1     Terminating   0          33m
+sivapod1     1/1     Running       0          37m
+```
