@@ -392,6 +392,96 @@ NAME                        READY   STATUS    RESTARTS   AGE
 ashu-node-6bdcc5668-5pntk   1/1     Running   0          2m
 ```
 
+### Creating LB type service -- if we don;t have Ingress controller 
+
+```
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ kubectl  get  deploy
+NAME        READY   UP-TO-DATE   AVAILABLE   AGE
+ashu-node   1/1     1            1           29m
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ kubectl   expose deployment ashu-node --type LoadBalancer --port 80  --target-port 3000 --name ashu-node-lb --dry-run=client -o yaml >nodeapp_lb.yaml 
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ kubectl  create -f nodeapp_lb.yaml 
+service/ashu-node-lb created
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ kubectl  get  svc
+NAME           TYPE           CLUSTER-IP    EXTERNAL-IP   PORT(S)        AGE
+ashu-node-lb   LoadBalancer   10.0.91.224   <pending>     80:32578/TCP   5s
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ kubectl  get  ep
+NAME           ENDPOINTS          AGE
+ashu-node-lb   10.244.2.69:3000   9s
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ 
+```
+
+### storage story 
+
+<img src="sts.png">
+
+### Creating mongodb deployment controller 
+
+```
+kubectl   create  deployment  ashu-mongo  --image=mongo  --port 27017  --dry-run=client -o yaml >mongo_db.yaml 
+```
+
+### Creating secret to db cred 
+
+```
+ kubectl  create  secret generic  ashu-db-cred --from-literal my-user=ashu  --from-literal my-password="Hello@Ashu123" --dry-run=client -o yaml >db_cred.yaml
+```
+
+### deploy it 
+
+```
+kubectl  create -f db_cred.yaml 
+secret/ashu-db-cred created
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ kubectl  get  secret
+NAME            TYPE                             DATA   AGE
+ashu-db-cred    Opaque                           2      5s
+ashu-reg-cred   kubernetes.io/dockerconfigjson   1      66m
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ 
+```
+
+### updating mongodb deployment file
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ashu-mongo
+  name: ashu-mongo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ashu-mongo
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ashu-mongo
+    spec:
+      containers:
+      - image: mongo
+        name: mongo
+        ports:
+        - containerPort: 27017
+        env: # to create / pass ENV variable info 
+        - name: MONGO_INITDB_ROOT_USERNAME
+          valueFrom:  # reading from somewhere
+            secretKeyRef: # from secret 
+              name: ashu-db-cred # name of secret 
+              key:  my-user # key which store user info 
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: ashu-db-cred
+              key: my-password 
+           
+        resources: {}
+status: {}
+
+```
+
 
 
 
