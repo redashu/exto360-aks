@@ -482,6 +482,31 @@ status: {}
 
 ```
 
+### creating deployment 
+
+```
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ ls 
+az_secret.yaml  db_cred.yaml  mongo_db.yaml  nodeapp_lb.yaml  node_deploy.yaml
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ kubectl  create -f mongo_db.yaml 
+deployment.apps/ashu-mongo created
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ kubectl  get deploy
+NAME         READY   UP-TO-DATE   AVAILABLE   AGE
+ashu-mongo   0/1     1            0           9s
+ashu-node    1/1     1            1           89m
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ kubectl  get po 
+NAME                          READY   STATUS              RESTARTS   AGE
+ashu-mongo-7b968fd595-dgc8d   0/1     ContainerCreating   0          15s
+ashu-node-6bdcc5668-5pntk     1/1     Running             0          66m
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ kubectl  get po 
+NAME                          READY   STATUS    RESTARTS   AGE
+ashu-mongo-7b968fd595-dgc8d   1/1     Running   0          38s
+ashu-node-6bdcc5668-5pntk     1/1     Running   0          66m
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ kubectl  get deploy
+NAME         READY   UP-TO-DATE   AVAILABLE   AGE
+ashu-mongo   1/1     1            1           41s
+ashu-node    1/1     1            1           89m
+```
+
 
 
 
