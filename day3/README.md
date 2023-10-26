@@ -258,6 +258,54 @@ ashu-lb-inext   LoadBalancer   10.0.190.49   <pending>     80:30785/TCP   4s
 <img src="svc11.png">
 
 
+## deploying node and mongo app 
+
+```
+ mkdir my-node-mongo-app
+[ashu@ip-172-31-60-143 ashu-apps]$ cd my-node-mongo-app/
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ ls
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ 
+
+```
+
+### Creating node-js-app as deployment controller 
+
+```
+kubectl   create  deploy ashu-node  --image=extoaksashu.azurecr.io/node-app:v1   --port 3000 --dry-run=client -o yaml  >node_deploy.yaml 
+```
+
+### having yaml
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ashu-node
+  name: ashu-node # name of deployment 
+spec:
+  replicas: 1 # number of pod we want 
+  selector:
+    matchLabels:
+      app: ashu-node
+  strategy: {}
+  template: # to create pods 
+    metadata:
+      creationTimestamp: null
+      labels: # label of all the pods 
+        app: ashu-node
+    spec:
+      containers:
+      - image: extoaksashu.azurecr.io/node-app:v1 # from ACR 
+        name: node-app
+        ports:
+        - containerPort: 3000
+        resources: {}
+status: {}
+
+```
+
 
 
 
