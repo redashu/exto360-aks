@@ -225,6 +225,38 @@ NAME          ENDPOINTS        AGE
 ashu-web-lb   10.244.2.32:80   12s
 [ashu@ip-172-31-60-143 k8s-res-design]$ 
 ```
+### Creating internal and external LB using Loadbalancer service type
+
+```
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  get  svc
+NAME          TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+ashu-web-lb   ClusterIP   10.0.242.126   <none>        80/TCP    19m
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl   delete svc  ashu-web-lb 
+service "ashu-web-lb" deleted
+[ashu@ip-172-31-60-143 k8s-res-design]$ 
+
+
+```
+
+### creating lb
+```
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  get  deploy
+NAME           READY   UP-TO-DATE   AVAILABLE   AGE
+ashu-deploy1   1/1     1            1           25m
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  expose deployment ashu-deploy1 --type LoadBalancer --port 80 --name ashu-lb-inext --dry-run=client  -o yaml >int_ext_lb.yaml 
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  create -f int_ext_lb.yaml 
+service/ashu-lb-inext created
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  get  svc
+NAME            TYPE           CLUSTER-IP    EXTERNAL-IP   PORT(S)        AGE
+ashu-lb-inext   LoadBalancer   10.0.190.49   <pending>     80:30785/TCP   4s
+[ashu@ip-172-31-60-143 k8s-res-design]$
+
+```
+
+### service in overall way 
+
+<img src="svc11.png">
+
 
 
 
