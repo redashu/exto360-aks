@@ -85,3 +85,147 @@ PING 10.244.0.5 (10.244.0.5): 56 data bytes
 ^C
 ```
 
+### Creating deployment 
+
+```
+[ashu@ip-172-31-60-143 ashu-apps]$ ls
+apache-server  ashu-python  java-code  k8s-res-design  node-app  webui-app
+[ashu@ip-172-31-60-143 ashu-apps]$ cd  k8s-res-design/
+[ashu@ip-172-31-60-143 k8s-res-design]$ ls
+ashupod1.yaml  ashupod2.yaml  autopod.yaml  deploy1.yaml  sts.yaml
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl   create -f deploy1.yaml 
+deployment.apps/ashu-deploy1 created
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl   get  deploy
+NAME           READY   UP-TO-DATE   AVAILABLE   AGE
+ashu-deploy1   0/1     1            0           4s
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  get  po 
+NAME                            READY   STATUS              RESTARTS   AGE
+ashu-deploy1-5ccff9465f-s8s6z   0/1     ContainerCreating   0          8s
+pod1                            1/1     Running             0          8m29s
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  delete pod pod1 
+pod "pod1" deleted
+[ashu@ip-172-31-60-143 k8s-res-design]$ 
+```
+
+### scaling pod to 2 
+
+<img src="net1.png">
+
+### scaling 
+
+```
+ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  get  no
+NAME                                STATUS   ROLES   AGE   VERSION
+aks-agentpool-39082632-vmss000004   Ready    agent   77m   v1.26.6
+aks-agentpool-39082632-vmss000005   Ready    agent   77m   v1.26.6
+aks-agentpool-39082632-vmss000006   Ready    agent   41m   v1.26.6
+[ashu@ip-172-31-60-143 k8s-res-design]$ 
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  get  deploy
+NAME           READY   UP-TO-DATE   AVAILABLE   AGE
+ashu-deploy1   1/1     1            1           29m
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  scale  deployment ashu-deploy1  --replicas 2
+deployment.apps/ashu-deploy1 scaled
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  get  deploy
+NAME           READY   UP-TO-DATE   AVAILABLE   AGE
+ashu-deploy1   1/2     2            1           30m
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl get po -o wide
+NAME                            READY   STATUS              RESTARTS   AGE   IP            NODE                                NOMINATED NODE   READINESS GATES
+ashu-deploy1-5ccff9465f-lw7c5   0/1     ContainerCreating   0          11s   <none>        aks-agentpool-39082632-vmss000006   <none>           <none>
+ashu-deploy1-5ccff9465f-s8s6z   1/1     Running             0          30m   10.244.0.10   aks-agentpool-39082632-vmss000004   <none>           <none>
+[ashu@ip-172-31-60-143 k8s-res-design]$ 
+```
+
+### service discovery in k8s 
+
+<img src="svc1.png">
+
+### introduction to service resource under apiversion v1 
+
+```
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  create service
+Create a service using a specified subcommand.
+
+Aliases:
+service, svc
+
+Available Commands:
+  clusterip      Create a ClusterIP service
+  externalname   Create an ExternalName service
+  loadbalancer   Create a LoadBalancer service
+  nodeport       Create a NodePort service
+```
+
+### creating internal LB using clusterip type service
+
+```
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  create service   clusterip  ashu-web-lb  --tcp  1234:80  --dry-run=client -o yaml 
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ashu-web-lb
+  name: ashu-web-lb
+spec:
+  ports:
+  - name: 1234-80
+    port: 1234
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: ashu-web-lb
+  type: ClusterIP
+status:
+  loadBalancer: {}
+```
+
+### creating it 
+
+```
+kubectl  create service   clusterip  ashu-web-lb  --tcp  1234:80  --dry-run=client -o yaml >web_lb.yaml
+[ashu@ip-172-31-60-143 k8s-res-design]$ 
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  create -f web_lb.yaml 
+service/ashu-web-lb created
+[ashu@ip-172-31-60-143 k8s-res-design]$ 
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  get service 
+NAME          TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
+ashu-web-lb   ClusterIP   10.0.240.221   <none>        1234/TCP   5s
+[ashu@ip-172-31-60-143 k8s-res-design]$ 
+
+```
+
+### easitest method
+
+```
+kubectl   create  -f deploy1.yaml 
+deployment.apps/ashu-deploy1 created
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  get  deploy
+NAME           READY   UP-TO-DATE   AVAILABLE   AGE
+ashu-deploy1   1/1     1            1           7s
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  get  po 
+NAME                            READY   STATUS    RESTARTS   AGE
+ashu-deploy1-5ccff9465f-std9d   1/1     Running   0          26s
+```
+
+### using expose to create service 
+
+```
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  get  deploy
+NAME           READY   UP-TO-DATE   AVAILABLE   AGE
+ashu-deploy1   1/1     1            1           2m46s
+[ashu@ip-172-31-60-143 k8s-res-design]$ 
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  expose  deployment  ashu-deploy1  --type ClusterIP --port 80 --name ashu-web-lb  --dry-run=client  -o yaml  >auto_web_lb.yaml 
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  create -f auto_web_lb.yaml 
+service/ashu-web-lb created
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  get  service
+NAME          TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+ashu-web-lb   ClusterIP   10.0.242.126   <none>        80/TCP    6s
+[ashu@ip-172-31-60-143 k8s-res-design]$ kubectl  get  ep 
+NAME          ENDPOINTS        AGE
+ashu-web-lb   10.244.2.32:80   12s
+[ashu@ip-172-31-60-143 k8s-res-design]$ 
+```
+
+
+
+
