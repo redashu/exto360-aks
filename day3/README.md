@@ -508,6 +508,104 @@ ashu-node    1/1     1            1           89m
 ```
 
 
+### CoreDNS
+
+<img src="dns.png">
+
+### Creating service 
+
+```
+ kubectl  get  deploy 
+NAME         READY   UP-TO-DATE   AVAILABLE   AGE
+ashu-mongo   1/1     1            1           65m
+ashu-node    1/1     1            1           154m
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ kubectl   get  svc
+NAME           TYPE           CLUSTER-IP    EXTERNAL-IP     PORT(S)        AGE
+ashu-node-lb   LoadBalancer   10.0.91.224   20.204.249.47   80:32578/TCP   123m
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ kubectl  expose  deployment  ashu-mongo --type ClusterIP --port 27017 --name ashu-mongo-lb --dry-run=client -o yaml  >mongo_svc.yaml 
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ kubectl create -f mongo_svc.yaml 
+service/ashu-mongo-lb created
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ kubectl  get  svc
+NAME            TYPE           CLUSTER-IP    EXTERNAL-IP     PORT(S)        AGE
+ashu-mongo-lb   ClusterIP      10.0.24.41    <none>          27017/TCP      7s
+ashu-node-lb    LoadBalancer   10.0.91.224   20.204.249.47   80:32578/TCP   125m
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ kubectl  get  ep
+NAME            ENDPOINTS           AGE
+ashu-mongo-lb   10.244.0.57:27017   13s
+ashu-node-lb    10.244.2.69:3000    125m
+```
+
+### implement hpa 
+
+### node_deploy.yaml 
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ashu-node
+  name: ashu-node # name of deployment 
+spec:
+  replicas: 1 # number of pod we want 
+  selector:
+    matchLabels:
+      app: ashu-node
+  strategy: {}
+  template: # to create pods 
+    metadata:
+      creationTimestamp: null
+      labels: # label of all the pods 
+        app: ashu-node
+    spec:
+      imagePullSecrets: # calling secret 
+      - name: ashu-reg-cred # name of secret 
+      containers:
+      - image: extoaksashu.azurecr.io/node-app:v1 # from ACR 
+        name: node-app
+        ports:
+        - containerPort: 3000
+        resources: 
+          requests:
+            memory: 50M # min RAM to start Pod 
+            cpu: 20m # milicore 
+          limits: 
+            memory: 300M 
+            cpu: 100m 
+status: {}
+
+```
+
+### replace it 
+
+```
+ kubectl  replace -f node_deploy.yaml --force
+```
+
+### create HPA 
+
+```
+kubectl  get deploy
+NAME         READY   UP-TO-DATE   AVAILABLE   AGE
+ashu-mongo   1/1     1            1           102m
+ashu-node    1/1     1            1           96s
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ kubectl  autoscale  deployment ashu-node   --min 2 --max 20 --cpu-percent 70 --dry-run=client -o yaml  >hpa.yaml 
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ kubectl create -f hpa.yaml 
+horizontalpodautoscaler.autoscaling/ashu-node created
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ kubectl  get hpa
+NAME        REFERENCE              TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
+ashu-node   Deployment/ashu-node   <unknown>/70%   2         20        0          4s
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ kubectl  get deploy
+NAME         READY   UP-TO-DATE   AVAILABLE   AGE
+ashu-mongo   1/1     1            1           104m
+ashu-node    1/1     1            1           3m39s
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ kubectl  get deploy
+NAME         READY   UP-TO-DATE   AVAILABLE   AGE
+ashu-mongo   1/1     1            1           104m
+ashu-node    2/2     2            2           4m5s
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ 
+```
 
 
 
