@@ -306,6 +306,93 @@ status: {}
 
 ```
 
+### we are unable to pull image so checking events
+
+```
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ kubectl  get events 
+LAST SEEN   TYPE      REASON              OBJECT                               MESSAGE
+20m         Normal    Killing             pod/ashu-deploy1-5ccff9465f-std9d    Stopping container ashuwebexto
+20m         Normal    Scheduled           pod/ashu-deploy1-5ccff9465f-tc89f    Successfully assigned ashu-project/ashu-deploy1-5ccff9465f-tc89f to aks-agentpool-39082632-vmss000006
+20m         Normal    Pulled              pod/ashu-deploy1-5ccff9465f-tc89f    Container image "dockerashu/ashuwebexto:version1" already present on machine
+20m         Normal    Created             pod/ashu-deploy1-5ccff9465f-tc89f    Created container ashuwebexto
+20m         Normal    Started             pod/ashu-deploy1-5ccff9465f-tc89f    Started container ashuwebexto
+20m         Normal    Killing             pod/ashu-deploy1-5ccff9465f-tc89f    Stopping container ashuwebexto
+20m         Normal    SuccessfulCreate    replicaset/ashu-deploy1-5ccff9465f   Created pod: ashu-deploy1-5ccff9465f-tc89f
+3m13s       Normal    Scheduled           pod/ashu-node-7f4b64f677-bwlxw       Successfully assigned ashu-project/ashu-node-7f4b64f677-bwlxw to aks-agentpool-39082632-vmss000006
+103s        Normal    Pulling             pod/ashu-node-7f4b64f677-bwlxw       Pulling image "extoaksashu.azurecr.io/node-app:v1"
+103s        Warning   Failed              pod/ashu-node-7f4b64f677-bwlxw       Failed to pull image "extoaksashu.azurecr.io/node-app:v1": rpc error: code = Unknown desc = failed to pull and unpack image "extoaksashu.azurecr.io/node-app:v1": failed to resolve reference "extoaksashu.azurecr.io/node-app:v1": failed to authorize: failed to fetch anonymous token: unexpected status from GET request to https://extoaksashu.azurecr.io/oauth2/token?scope=repository%3Anode-app%3Apull&service=extoaksashu.azurecr.io: 401 Unauthorized
+103s        Warning   Failed              pod/ashu-node-7f4b64f677-bwlxw       Error: ErrImagePull
+77s         Normal    BackOff             pod/ashu-node-7f4b64f677-bwlxw       Back-off pulling image "extoaksashu.azurecr.io/node-app:v1"
+88s         Warning   Failed              pod/ashu-node-7f4b64f677-bwlxw       Error: ImagePullBackOff
+3m13s       Normal    SuccessfulCreate    replicaset/ashu-node-7f4b64f677      Created pod: ashu-node-7f4b64f677-bwlxw
+3m13s       Normal    ScalingReplicaSet   deployment/ashu-node                 Scaled up replica set ashu-node-7f4b64f677 to 1
+```
+
+### to pull any private image from any registry we have to share cred to kubelet by controllers/ pod 
+
+<img src="sec.png">
+
+### Creating docker secret 
+
+```
+kubectl  create secret  docker-registry  ashu-reg-cred --docker-server extoaksashu.azurecr.io        --docker-username   extoaksashu   --docker-password="NXxqg6jRCev89b"  --dry-run=client -o yaml >az_secret.yaml
+
+===========>>
+ashu@ip-172-31-60-143 my-node-mongo-app]$ kubectl  create  -f  az_secret.yaml 
+secret/ashu-reg-cred created
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ kubectl get secrets
+NAME            TYPE                             DATA   AGE
+ashu-reg-cred   kubernetes.io/dockerconfigjson   1      6s
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ 
+
+```
+
+### updating deployment to use secret
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ashu-node
+  name: ashu-node # name of deployment 
+spec:
+  replicas: 1 # number of pod we want 
+  selector:
+    matchLabels:
+      app: ashu-node
+  strategy: {}
+  template: # to create pods 
+    metadata:
+      creationTimestamp: null
+      labels: # label of all the pods 
+        app: ashu-node
+    spec:
+      imagePullSecrets: # calling secret 
+      - name: ashu-reg-cred # name of secret 
+      containers:
+      - image: extoaksashu.azurecr.io/node-app:v1 # from ACR 
+        name: node-app
+        ports:
+        - containerPort: 3000
+        resources: {}
+status: {}
+
+```
+
+### apply changes
+
+```
+kubectl  apply -f node_deploy.yaml 
+deployment.apps/ashu-node configured
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ 
+[ashu@ip-172-31-60-143 my-node-mongo-app]$ kubectl  get po
+NAME                        READY   STATUS    RESTARTS   AGE
+ashu-node-6bdcc5668-5pntk   1/1     Running   0          2m
+```
+
+
 
 
 
