@@ -102,4 +102,149 @@ PS C:\Users\humanfirmware>
 PS C:\Users\humanfirmware>
 ```
 
+### checking repo list
+
+```
+
+[ashu@ip-172-31-60-143 ashu-apps]$ helm repo ls
+Error: no repositories to show
+[ashu@ip-172-31-60-143 ashu-apps]$ 
+
+```
+
+### adding repo in helm 
+
+```
+ helm  repo  add  ashu-repo  https://charts.bitnami.com/bitnami
+"ashu-repo" has been added to your repositories
+[ashu@ip-172-31-60-143 ashu-apps]$ 
+[ashu@ip-172-31-60-143 ashu-apps]$ helm repo ls
+NAME            URL                               
+ashu-repo       https://charts.bitnami.com/bitnami
+[ashu@ip-172-31-60-143 ashu-apps]$ 
+```
+
+### adding more repo 
+
+```
+helm repo ls
+NAME            URL                                               
+ashu-repo       https://charts.bitnami.com/bitnami                
+ashu-monitor    https://prometheus-community.github.io/helm-charts
+[ashu@ip-172-31-60-143 ashu-apps]$ 
+[ashu@ip-172-31-60-143 ashu-apps]$ 
+[ashu@ip-172-31-60-143 ashu-apps]$ helm repo add  ashu-personal https://redashu.github.io/test-helm/
+"ashu-personal" has been added to your repositories
+[ashu@ip-172-31-60-143 ashu-apps]$ 
+[ashu@ip-172-31-60-143 ashu-apps]$ helm repo ls
+NAME            URL                                               
+ashu-repo       https://charts.bitnami.com/bitnami                
+ashu-monitor    https://prometheus-community.github.io/helm-charts
+ashu-personal   https://redashu.github.io/test-helm/            
+```
+
+### deploy first helm chart package 
+
+```
+helm repo ls
+NAME            URL                                               
+ashu-repo       https://charts.bitnami.com/bitnami                
+ashu-monitor    https://prometheus-community.github.io/helm-charts
+ashu-personal   https://redashu.github.io/test-helm/              
+[ashu@ip-172-31-60-143 ashu-apps]$ 
+[ashu@ip-172-31-60-143 ashu-apps]$ helm search  repo  nginx
+NAME                                    CHART VERSION   APP VERSION     DESCRIPTION                                       
+ashu-monitor/prometheus-nginx-exporter  0.2.0           0.11.0          A Helm chart for the Prometheus NGINX Exporter    
+ashu-personal/nginx                     0.1.0           1.16.0          A Helm chart for Kubernetes                       
+ashu-repo/nginx                         15.3.5          1.25.3          NGINX Open Source is a web server that can be a...
+ashu-repo/nginx-ingress-controller      9.9.2           1.9.3           NGINX Ingress Controller is an Ingress controll...
+ashu-repo/nginx-intel                   2.1.15          0.4.9           DEPRECATED NGINX Open Source for Intel is a lig...
+[ashu@ip-172-31-60-143 ashu-apps]$ 
+[ashu@ip-172-31-60-143 ashu-apps]$ kubectl  get all
+No resources found in ashu-project namespace.
+[ashu@ip-172-31-60-143 ashu-apps]$ 
+[ashu@ip-172-31-60-143 ashu-apps]$ helm install  ashu-app  ashu-repo/nginx  
+NAME: ashu-app
+LAST DEPLOYED: Fri Oct 27 06:59:58 2023
+NAMESPACE: ashu-project
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+CHART NAME: nginx
+CHART VERSION: 15.3.5
+APP VERSION: 1.25.3
+
+** Please be patient while the chart is being deployed **
+NGINX can be accessed through the following DNS name from within your cluster:
+
+    ashu-app-nginx.ashu-project.svc.cluster.local (port 80)
+
+To access NGINX from outside the cluster, follow the steps below:
+```
+
+### to see currently deployed charts
+
+```
+helm  ls
+NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART           APP VERSION
+ashu-app        ashu-project    1               2023-10-27 06:59:58.1340088 +0000 UTC   deployed        nginx-15.3.5    1.25.3     
+[ashu@ip-172-31-60-143 ashu-apps]$ 
+[ashu@ip-172-31-60-143 ashu-apps]$ 
+```
+
+### helm verify the deployment thing 
+
+```
+kubectl  get deploy
+NAME             READY   UP-TO-DATE   AVAILABLE   AGE
+ashu-app-nginx   1/1     1            1           3m48s
+[ashu@ip-172-31-60-143 ashu-apps]$ 
+[ashu@ip-172-31-60-143 ashu-apps]$ 
+[ashu@ip-172-31-60-143 ashu-apps]$ 
+[ashu@ip-172-31-60-143 ashu-apps]$ kubectl   get po 
+NAME                              READY   STATUS    RESTARTS   AGE
+ashu-app-nginx-75c6d758df-6xp5l   1/1     Running   0          4m16s
+[ashu@ip-172-31-60-143 ashu-apps]$ kubectl   get  svc
+NAME             TYPE           CLUSTER-IP    EXTERNAL-IP     PORT(S)        AGE
+ashu-app-nginx   LoadBalancer   10.0.119.62   20.219.172.89   80:31370/TCP   4m21s
+[ashu@ip-172-31-60-143 ashu-apps]$ 
+[ashu@ip-172-31-60-143 ashu-apps]$ kubectl  get  ep
+NAME             ENDPOINTS          AGE
+ashu-app-nginx   10.244.2.59:8080   5m3s
+[ashu@ip-172-31-60-143 ashu-apps]$ 
+[ashu@ip-172-31-60-143 ashu-apps]$ 
+[ashu@ip-172-31-60-143 ashu-apps]$ kubectl  get  secret
+NAME                             TYPE                 DATA   AGE
+sh.helm.release.v1.ashu-app.v1   helm.sh/release.v1   1      5m19s
+[ashu@ip-172-31-60-143 ashu-apps]$ 
+[ashu@ip-172-31-60-143 ashu-apps]$ 
+[ashu@ip-172-31-60-143 ashu-apps]$ kubectl  get  hpa
+No resources found in ashu-project namespace.
+```
+
+### remove / uninstalling helm deployment 
+
+```
+helm ls
+NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART           APP VERSION
+ashu-app        ashu-project    1               2023-10-27 06:59:58.1340088 +0000 UTC   deployed        nginx-15.3.5    1.25.3     
+[ashu@ip-172-31-60-143 ashu-apps]$ 
+[ashu@ip-172-31-60-143 ashu-apps]$ 
+[ashu@ip-172-31-60-143 ashu-apps]$ helm uninstall ashu-app  
+release "ashu-app" uninstalled
+[ashu@ip-172-31-60-143 ashu-apps]$ 
+[ashu@ip-172-31-60-143 ashu-apps]$ helm ls
+NAME    NAMESPACE       REVISION        UPDATED STATUS  CHART   APP VERSION
+[ashu@ip-172-31-60-143 ashu-apps]$ 
+[ashu@ip-172-31-60-143 ashu-apps]$ 
+[ashu@ip-172-31-60-143 ashu-apps]$ kubectl  get  all
+NAME                     TYPE           CLUSTER-IP    EXTERNAL-IP     PORT(S)        AGE
+service/ashu-app-nginx   LoadBalancer   10.0.119.62   20.219.172.89   80:31370/TCP   7m29s
+[ashu@ip-172-31-60-143 ashu-apps]$ kubectl  get  all
+No resources found in ashu-project namespace.
+[ashu@ip-172-31-60-143 ashu-apps]$ 
+```
+
+
 
