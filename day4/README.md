@@ -470,3 +470,36 @@ NAME    ENDPOINTS           AGE
 db-lb   10.244.2.114:3306   17s
 ```
 
+### task 2 -- mongodb deployment --no storage
+
+## deploy local helm chart
+
+```
+helm install  ashu-db  /tmp/charts/exto-mongo/
+NAME: ashu-db
+LAST DEPLOYED: Fri Oct 27 11:18:26 2023
+NAMESPACE: ashu-project
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+[ashu@ip-172-31-60-143 /]$ kubectl  get deploy
+NAME         READY   UP-TO-DATE   AVAILABLE   AGE
+ashu-mongo   1/1     1            1           25s
+[ashu@ip-172-31-60-143 /]$ kubectl  get secret
+NAME                            TYPE                 DATA   AGE
+db-cred                         Opaque               2      31s
+sh.helm.release.v1.ashu-db.v1   helm.sh/release.v1   1      31s
+[ashu@ip-172-31-60-143 /]$ kubectl  get sv 
+error: the server doesn't have a resource type "sv"
+[ashu@ip-172-31-60-143 /]$ kubectl  get svc
+NAME        TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)     AGE
+mongo-svc   ClusterIP   10.0.74.114   <none>        27017/TCP   37s
+```
+
+### understanding storage engineering 
+
+<img src="st.png">
+
+
+
+
