@@ -374,5 +374,99 @@ ashu-app        ashu-project    2               2023-10-27 07:53:41.338957426 +0
 
 <img src="task1.png">
 
+## MYSQL -- calculation 
 
+### cred.env 
+
+```
+MYSQL_ROOT_PASSWORD=Hello@dbroot123
+MYSQL_USER=ashu
+MYSQL_PASSWORD=Ashu@123
+```
+### creating secret 
+
+```
+kubectl  create secret generic   ashu-db-cred --from-env-file cred.env  --dry-run=client -o yaml >db_secret.yaml
+[ashu@ip-172-31-60-143 tasks]$ kubectl create -f db_secret.yaml 
+secret/ashu-db-cred created
+[ashu@ip-172-31-60-143 tasks]$ 
+[ashu@ip-172-31-60-143 tasks]$ kubectl get  secret
+NAME           TYPE     DATA   AGE
+ashu-db-cred   Opaque   3      6s
+
+=======>>
+
+```
+### creating deployment with enfrom 
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ashu-db
+  name: ashu-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ashu-db
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ashu-db
+    spec:
+      containers:
+      - image: mysql
+        name: mysql
+        resources: {}
+        envFrom:
+        - secretRef:
+            name: ashu-db-cred 
+status: {}
+
+```
+
+###
+
+```
+ ls
+cred.env  db_deployment.yaml  db_secret.yaml
+[ashu@ip-172-31-60-143 tasks]$ kubectl  create -f db_deployment.yaml 
+deployment.apps/ashu-db created
+[ashu@ip-172-31-60-143 tasks]$ kubectl  get  deploy
+NAME      READY   UP-TO-DATE   AVAILABLE   AGE
+ashu-db   1/1     1            1           4s
+[ashu@ip-172-31-60-143 tasks]$ kubectl  get po 
+NAME                      READY   STATUS    RESTARTS   AGE
+ashu-db-bc6ccfdd7-grrw2   1/1     Running   0          8s
+```
+### creating service 
+
+```
+kubectl  get deploy
+NAME      READY   UP-TO-DATE   AVAILABLE   AGE
+ashu-db   1/1     1            1           75s
+[ashu@ip-172-31-60-143 tasks]$ kubectl  expose deployment ashu-db --port 3306 --name db-lb --dry-run=client -o yaml >dbsvc.yaml
+[ashu@ip-172-31-60-143 tasks]$ kubectl  create -f dbsvc.yaml 
+service/db-lb created
+[ashu@ip-172-31-60-143 tasks]$ kubectl  get secret
+NAME           TYPE     DATA   AGE
+ashu-db-cred   Opaque   3      15m
+[ashu@ip-172-31-60-143 tasks]$ kubectl  get deploy
+NAME      READY   UP-TO-DATE   AVAILABLE   AGE
+ashu-db   1/1     1            1           2m3s
+[ashu@ip-172-31-60-143 tasks]$ kubectl  get  po
+NAME                      READY   STATUS    RESTARTS   AGE
+ashu-db-bc6ccfdd7-grrw2   1/1     Running   0          2m6s
+[ashu@ip-172-31-60-143 tasks]$ kubectl  get  svc
+NAME    TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
+db-lb   ClusterIP   10.0.211.218   <none>        3306/TCP   14s
+[ashu@ip-172-31-60-143 tasks]$ kubectl  get  ep
+NAME    ENDPOINTS           AGE
+db-lb   10.244.2.114:3306   17s
+```
 
