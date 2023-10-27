@@ -370,4 +370,9 @@ ashu-app        ashu-project    2               2023-10-27 07:53:41.338957426 +0
 [ashu@ip-172-31-60-143 modify-helm-charts]$ 
 ```
 
+### task 1 
+
+<img src="task1.png">
+
+
 
