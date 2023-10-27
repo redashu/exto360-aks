@@ -246,5 +246,77 @@ No resources found in ashu-project namespace.
 [ashu@ip-172-31-60-143 ashu-apps]$ 
 ```
 
+### creating helm chart to understand its internal structure 
 
+```
+ls
+apache-server  ashu-python  java-code  k8s-res-design  my-node-mongo-app  node-app  webui-app
+[ashu@ip-172-31-60-143 ashu-apps]$ ls
+apache-server  ashu-python  helm-explore  java-code  k8s-res-design  my-node-mongo-app  node-app  webui-app
+[ashu@ip-172-31-60-143 ashu-apps]$ cd helm-explore/
+[ashu@ip-172-31-60-143 helm-explore]$ ls
+[ashu@ip-172-31-60-143 helm-explore]$ helm create  ashu-webapp 
+Creating ashu-webapp
+[ashu@ip-172-31-60-143 helm-explore]$ ls
+ashu-webapp
+[ashu@ip-172-31-60-143 helm-explore]$ ls  ashu-webapp/
+charts  Chart.yaml  templates  values.yaml
+[ashu@ip-172-31-60-143 helm-explore]$ 
+
+```
+
+### main focus is values.yaml
+
+```
+ cd ashu-webapp/
+[ashu@ip-172-31-60-143 ashu-webapp]$ ls
+charts  Chart.yaml  templates  values.yaml
+[ashu@ip-172-31-60-143 ashu-webapp]$ ls templates/
+deployment.yaml  _helpers.tpl  hpa.yaml  ingress.yaml  NOTES.txt  serviceaccount.yaml  service.yaml  tests
+[ashu@ip-172-31-60-143 ashu-webapp]$ 
+
+
+```
+
+### deploy it with custom values.yaml
+
+### values.yaml 
+```
+service:
+  type: ClusterIP
+```
+### ---
+
+```
+cd  modify-helm-charts/
+[ashu@ip-172-31-60-143 modify-helm-charts]$ ls
+values.yaml
+[ashu@ip-172-31-60-143 modify-helm-charts]$ 
+[ashu@ip-172-31-60-143 modify-helm-charts]$ helm install  ashu-app  ashu-repo/nginx   --values values.yaml 
+NAME: ashu-app
+LAST DEPLOYED: Fri Oct 27 07:33:08 2023
+NAMESPACE: ashu-project
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+CHART NAME: nginx
+CHART VERSION: 15.3.5
+APP VERSION: 1.25.3
+
+```
+### verify 
+
+```
+ helm ls
+NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART           APP VERSION
+ashu-app        ashu-project    1               2023-10-27 07:33:08.530844335 +0000 UTC deployed        nginx-15.3.5    1.25.3     
+[ashu@ip-172-31-60-143 modify-helm-charts]$ 
+[ashu@ip-172-31-60-143 modify-helm-charts]$ kubectl  get deploy
+NAME             READY   UP-TO-DATE   AVAILABLE   AGE
+ashu-app-nginx   1/1     1            1           77s
+[ashu@ip-172-31-60-143 modify-helm-charts]$ kubectl  get svc
+NAME             TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)   AGE
+ashu-app-nginx   ClusterIP   10.0.30.117   <none>        80/TCP    82s
+```
 
