@@ -320,3 +320,54 @@ NAME             TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)   AGE
 ashu-app-nginx   ClusterIP   10.0.30.117   <none>        80/TCP    82s
 ```
 
+### updating in values.yaml
+
+### values.yaml 
+```
+# service section 
+service:
+  type: ClusterIP
+# changing replication count
+replicaCount: 3 
+# image section 
+image:
+  repository: docker.io/dockerashu/ashuwebexto
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: version1 
+```
+
+### helm upgrade
+
+```
+helm upgrade   ashu-app  ashu-repo/nginx   --values values.yaml 
+Release "ashu-app" has been upgraded. Happy Helming!
+NAME: ashu-app
+LAST DEPLOYED: Fri Oct 27 07:53:41 2023
+NAMESPACE: ashu-project
+STATUS: deployed
+REVISION: 2
+TEST SUITE: None
+NOTES:
+CHART NAME: nginx
+CHART VERSION: 15.3.5
+APP VERSION: 1.25.3
+
+** Please be patient while the chart is being deployed **
+NGINX can be accessed through the following DNS name from within your cluster:
+
+    ashu-app-nginx.ashu-project.svc.cluster.local (port 80)
+
+To access NGINX from outside the cluster, follow the steps below:
+```
+
+### verify 
+
+```
+helm  ls
+NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART           APP VERSION
+ashu-app        ashu-project    2               2023-10-27 07:53:41.338957426 +0000 UTC deployed        nginx-15.3.5    1.25.3     
+[ashu@ip-172-31-60-143 modify-helm-charts]$ 
+```
+
+
