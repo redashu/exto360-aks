@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: node-app-route
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: exto-ui.delvex.io 
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: node-lb
+            port:
+              number: 80
+      - path: /api 
+        pathType: Prefix
+        backend:
+          service:
+            name: api-lb
+            port:
+              number: 80

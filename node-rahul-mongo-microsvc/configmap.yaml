@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  db_url: mongodb://ashu:Redhat@mongo-lb:27017
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: ashu-app-con

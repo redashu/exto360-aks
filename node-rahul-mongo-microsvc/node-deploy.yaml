@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ui-app
+  name: ui-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ui-app
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ui-app
+    spec:
+      imagePullSecrets:
+      - name: ashu-reg-cred # image pull secret for ACR 
+      containers:
+      - image: extoaksashu.azurecr.io/rahuldevopsapp:20231028.7
+        name: rahuldevopsapp
+        ports:
+        - containerPort: 3008
+        resources: {}
+        env: # passing ENV to connect mongoDB 
+        - name: MONGO_URI 
+          valueFrom:
+            configMapKeyRef:
+              name: ashu-app-con
+              key: db_url  
+status: {}

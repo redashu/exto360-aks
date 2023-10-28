@@ -1,0 +1,970 @@
+    1  ls
+    2  history 
+    3  ls
+    4  docker  version 
+    5  who
+    6  whoami
+    7  docker version 
+    8  mkdir  ashu-apps
+    9  ls
+   10  docker system df
+   11  pwd
+   12  mkdir webui-app  mkdir java-code 
+   13  ls
+   14  rmdir mkdir/
+   15  ls
+   16  cd  webui-app/
+   17  ls
+   18  git clone  https://github.com/microsoft/project-html-website
+   19  ls
+   20  touch Dockerfile
+   21  ls
+   22  docker  build   -t   ashuwebui:v1  . 
+   23  history 
+   24  docker  images
+   25  history 
+   26  ls
+   27  docker  images
+   28  docker images
+   29  docker  run  --name ashuc1 -d  ashuwebui:v1  
+   30  docker  ps
+   31  history 
+   32  docker ps
+   33  history 
+   34  docker ps
+   35  docker  stats
+   36  docker  ps
+   37  docker  inspect ashuc1 
+   38  docker  ps
+   39  docker  stop ashuc1
+   40  docker  rm ashuc1
+   41  docker  run  --name ashuc1 -d  -p  1234:80      ashuwebui:v1  
+   42  docker ps
+   43  history 
+   44  docker ps
+   45  docker stats
+   46  kubectl 
+   47  kubectl   version --client 
+   48  kubectl   version --client  -o yaml 
+   49  ls  ~/
+   50  kubectl   get nodes --kubeconfig  ~/config 
+   51  mkdir  ~/.kube 
+   52  cp -v  ~/config   /tmp/
+   53  mkdir  ~/.kube 
+   54  cp -v  /tmp/config   ~/.kube/config 
+   55  ls -l /tmp/config 
+   56  chmod  644  /tmp/config 
+   57  ls -l /tmp/config 
+   58  mkdir  ~/.kube 
+   59  kubectl   get  nodes
+   60  mv  ~/.kube/config   ~/.kube/ashu.txt 
+   61  kubectl   get  nodes
+   62  kubectl   get  nodes  --kubeconfig   ~/.kube/ashu.txt  
+   63  export KUBECONFIG=/home/ashu/.kube/ashu.txt 
+   64  kubectl   get  nodes
+   65  mv ~/.kube/ashu.txt   ~/.kube/config 
+   66  mkdir node-app
+   67  cd node-app/
+   68  ls
+   69  docker-compose  up -d
+   70  docker-compose  start
+   71  docker-compose  ps
+   72  docker-compose  down 
+   73  docker-compose  start
+   74  docker-compose  up -d
+   75  docker-compose  down 
+   76  docker-compose  up -d
+   77  docker-compose  ps
+   78  docker-compose  ps -a
+   79  docker-compose logs app
+   80  docker-compose  down 
+   81  docker-compose  up -d --build 
+   82  docker-compose  ps
+   83  docker-compose  down 
+   84  docker-compose  up -d --build 
+   85  docker-compose  ps
+   86  docker-compose down 
+   87  docker-compose up -d --build 
+   88  docker-compose ps
+   89  ls
+   90  cp  app.js  app.js.backup 
+   91  ls
+   92  docker-compose down 
+   93  ls
+   94  kubectl   describe  pod  ashupod1 
+   95    Normal  Pulled     18m   kubelet            Successfully pulled image "dockerashu/ashuwebexto:version1" in 13.343716446s (13.343801447s including waiting)
+   96  kubectl   describe  pod  ashupod1 
+   97  kubectl   describe  pod  ashupod2
+   98  kubectl  delete pod ashupod2
+   99  kubectl get po 
+  100  kubectl get po   ashupod1   -o wide
+  101  kubectl get nodes
+  102  kubectl get po   ashupod1   -o wide
+  103  kubectl   run  ashupodx1 --image=dockerashu/ashuwebexto:version1 --port 80 --dry-run=client 
+  104  kubectl   run  ashupodx1 --image=dockerashu/ashuwebexto:version1 --port 80 --dry-run=client -o yaml
+  105  kubectl   run  ashupodx1 --image=dockerashu/ashuwebexto:version1 --port 80 --dry-run=client -o json 
+  106  cal
+  107   kubectl   create  deployment  ashu-deploy1  --image=dockerashu/ashuwebexto:version1 --port 80 --dry-run=client  -o yaml   >deploy1.yaml  
+  108  history 
+  109  kubectl  get  po -o wide
+  110  kubectl  get  po 
+  111  kubectl  delete pod ashu-deploy1-5ccff9465f-6krfb
+  112  kubectl  get  pods
+  113  kubectl  get  deploy
+  114  whoami
+  115  kubectl  get  deploy
+  116  kubectl  delete deploy amit-deploy1
+  117  kubectl  get  namespaces
+  118  kubectl  delete all --all
+  119  docker ps -a
+  120  docker rm $(docker ps -aq) -f
+  121  docker rmi $(docker images -q) -f
+  122  docker ps
+  123  docker ps -a
+  124  docker images
+  125  history 
+  126  mkdir apache-server
+  127  docker pull nginx 
+  128  docker pull mysql
+  129  history 
+  130  docker inspect  nginx 
+  131  docker inspect  mysql
+  132  docker  run -d --name c1 -p 1234:80 nginx 
+  133  docker  ps
+  134  docker inspect nginx 
+  135  history 
+  136  ls
+  137  docker build -t  ashu:httpdv1  apache-server/ 
+  138  docker images
+  139  docker run -d --name ashuc1 -p 4455:80  ashu:httpdv1 
+  140  docker  ps
+  141  docker ps 
+  142  docker inspect ashu:httpdv1
+  143  docker  rm $(docker ps -aq) -f
+  144  ls
+  145  cd  ashu-python/
+  146  docker  build  -t  ashupython:v1  . 
+  147  docker  images
+  148  docker  run  -dit  --name ashuc11   ashupython:v1 
+  149  docker  ps
+  150  history 
+  151  docker  ps
+  152  docker  logs  ashuc11 
+  153  docker  logs  -f  ashuc11 
+  154  history 
+  155  docker images
+  156  ls
+  157  docker build -t ashupython:v2 -f  ashu.dockerfile  .  
+  158  docker images
+  159  history 
+  160  docker ps
+  161  docker stop  ashuc11
+  162  docker rm ashuc11
+  163  cd  ..
+  164  ls
+  165  cd  webui-app/
+  166  ls
+  167  ls  -a  project-html-website/
+  168  ls
+  169  docker  build  -t  ashuwebapp:extov1  -f  httpd.dockerfile   .  
+  170  docker images
+  171  history 
+  172  ls
+  173  docker images
+  174  docker history d53b2b2a82e1
+  175  docker images
+  176  docker images  | grep ashu
+  177  docker run --name ashuweb -d  -p 1199:80  ashuwebapp:extov1 
+  178  docker  ps
+  179  history 
+  180  docker  ps
+  181  docker  ps   | grep -i pra
+  182  history 
+  183  docker  ps
+  184  docker  stop ashuweb 
+  185  docker  rm ashuweb
+  186  docker  images  | grep ashu
+  187  docker  tag  ashuwebapp:extov1   docker.io/dockerashu/ashuwebexto:version1  
+  188  docker  tag  2f46b8ecc1dd   docker.io/dockerashu/ashuwebexto:version1  
+  189  docker  login 
+  190  docker  push  docker.io/dockerashu/ashuwebexto:version1 
+  191  history 
+  192  docker  tag  ashuwebapp:extov1   docker.io/dockerashu/helloooooashuuuu:version1 
+  193  docker push docker.io/dockerashu/helloooooashuuuu:version1
+  194  docker  tag  ashuwebapp:extov1   extoaksashu.azurecr.io/ashuwebui:appv1  
+  195  docker  login  extoaksashu.azurecr.io  
+  196  docker  push extoaksashu.azurecr.io/ashuwebui:appv1 
+  197  history 
+  198  docker logout  extoaksashu.azurecr.io 
+  199  docker logout 
+  200  docker images
+  201  history   | grep push 
+  202  history   | grep push   | grep acr
+  203  kubectl  version --client -o yaml 
+  204  ls   ~/.kube/
+  205  kubectl   get  nodes
+  206  kubectl   get  nodes -oyaml
+  207  kubectl   get  nodes -o json 
+  208  kubectl   get  nodes 
+  209  kubectl   get  nodes  -o wide
+  210  kubectl   get   nodes
+  211  kubectl   get   pods
+  212  kubectl  get nodes
+  213  ls
+  214  cd ..
+  215  ls
+  216  cd  k8s-res-design/
+  217  ls
+  218  kubectl   get  pods
+  219  kubectl   create  -f  ashupod1.yaml 
+  220  kubectl  get  pods
+  221  kubectl   get node
+  222  kubectl   get  pod
+  223  kubectl   get  pod  ashupod1  -o wide
+  224  kubectl   get node
+  225  kubectl   get  pod  -o wide
+  226  kubectl   get  pod  ashupod1  
+  227  kubectl   get  pod  ashupod1   -o wide
+  228  kubectl   get  pod  ashupod1  
+  229  kubectl   get  pod  ashupod1   -o wide  
+  230  history 
+  231  kubectl  create -f  ashupod2.yaml 
+  232  kubectl  get  pods
+  233  kubectl  logs ashupod1 
+  234  kubectl  exec  -it  ashupod1 -- bash 
+  235  kubectl  create  -f ashupod1.yaml 
+  236  kubectl  apply -f  ashupod1.yaml  
+  237  kubectl  replace -f  ashupod1.yaml   
+  238  kubectl  replace -f  ashupod1.yaml   --force
+  239  kubectl  get  pods
+  240  history 
+  241  kubectl  replace -f  ashupod1.yaml   --force
+  242  kubectl   run  ashupodx1 --image=dockerashu/ashuwebexto:version1 --port 80 --dry-run=client -o yaml      >autopod.yaml
+  243  history 
+  244  kubectl  get  po 
+  245  kubectl  delete pod ashupod1
+  246  kubectl  get  pod
+  247  kubectl  api-resources 
+  248  ls
+  249  kubectl delete pod --all
+  250  kubectl   create  deployment  ashu-deploy1  --image=dockerashu/ashuwebexto:version1 --port 80 --dry-run=client  -o yaml 
+  251  kubectl   create  deployment  ashu-deploy1  --image=dockerashu/ashuwebexto:version1 --port 80 --dry-run=client  -o yaml   >deploy1.yaml 
+  252  kubectl  create -f deploy1.yaml 
+  253  kubectl  get  deployment
+  254  kubectl   get  pods
+  255  kubectl   get  pods -o wide
+  256  kubectl  create -f deploy1.yaml 
+  257  kubectl  apply  -f deploy1.yaml 
+  258  kubectl  get  deploy
+  259  kubectl  get  po
+  260  kubectl  get  deploy 
+  261  kubectl   scale deployment  ashu-deploy1  --replicas=1
+  262  kubectl  get  deploy 
+  263  kubectl   scale deployment  ashu-deploy1  --replicas=5
+  264  kubectl  get  deploy 
+  265  kubectl   scale deployment  ashu-deploy1  --replicas=0
+  266  kubectl  get  deploy
+  267  kubectl   create   namespace  ashu-project
+  268  kubectl  get  ns
+  269  kubectl get  po
+  270  kubectl  config  set-context --current --namespace ashu-project
+  271  kubectl   get  pods
+  272  history 
+  273  kubectl  create -f deploy1.yaml 
+  274  kubectl  get  deploy
+  275  kubectl delete all --all
+  276  vim  ~/.bashrc 
+  277  source ~/.bashrc 
+  278  kubectl get sc
+  279  cd k8s-res-design/
+  280  kubectl  apply -f sts.yaml 
+  281  kubectl  get sts
+  282  kubectl  get po
+  283  kubectl  get pvc
+  284  kubectl  get po
+  285  kubectl get po -o wide
+  286  kubectl get sc
+  287  kubectl delete sts --all
+  288  kubectl  get po 
+  289  kubectl  get pvc
+  290  kubectl apply -f sts.yaml 
+  291  kubectl  get po 
+  292  kubectl  get pvc
+  293  kubectl  get po 
+  294  kubectl  get pvc
+  295  kubectl delete sts --all
+  296  kubectl  delete pvc --all
+  297  cd ..
+  298  ls
+  299  cd node-app/
+  300  ls
+  301  cp app.js  app.js.backup 
+  302  ls
+  303  docker-compose down 
+  304  docker-compose up -d --build 
+  305  docker-compose  ps
+  306  docker-compose  down 
+  307  docker-compose up -d --build 
+  308  docker-compose  ps
+  309  docker-compose  down 
+  310  docker-compose up -d --build 
+  311  docker-compose  down 
+  312  docker-compose up -d --build 
+  313  docker-compose  down 
+  314  docker-compose up -d --build 
+  315  docker-compose  down 
+  316  docker-compose up -d --build 
+  317  docker-compose  down 
+  318  docker-compose up -d --build 
+  319  docker-compose  down 
+  320  docker-compose up -d --build 
+  321  docker-compose  ps
+  322  docker  ps -a
+  323  toptop
+  324  top
+  325  docker-compose down 
+  326  docker-compose up -d --build 
+  327  kubectl  get  ep -w
+  328  kubectl  get  ep 
+  329  docker  images  | grep node
+  330  docker  images  | grep azure
+  331  docker  tag 0c3986c4ab79  extoaksashu.azurecr.io/node-app:v1 
+  332  docker login extoaksashu.azurecr.io
+  333  docker  push  extoaksashu.azurecr.io/node-app:v1
+  334  exit
+  335  history 
+  336  exit
+  337  kubectl  get  po 
+  338  kubectl  exec ashu-node-6bdcc5668-5pntk -- env
+  339  kubectl run attack -it --rm --image=alpine --command sh 
+  340  history 
+  341  docker images
+  342  docker rm $(docker ps -qa) -f
+  343  docker rmi $(docker images -q) -f
+  344  docker pull caddy:2.7.5-builder
+  345  set -eux
+  346  exit
+  347  kubectl  get no
+  348  kubectl  get  ns
+  349  kubectl  get  pods
+  350  kubectl  get  pods  -n kube-system 
+  351  kubectl  get  ns
+  352  kubectl  get pods
+  353  history | grep config
+  354  kubectl config get-contexts 
+  355  cat  ~/.kube/config 
+  356  kubectl  config  view 
+  357  kubectl  get  pods  -n kube-system 
+  358  kubectl  run pod1 --image=nginx 
+  359  kubectl  get po -o wide
+  360  kubectl  run -it --rm  --image=alpine  --command sh 
+  361  ls
+  362  cd  k8s-res-design/
+  363  ls
+  364  kubectl   create -f deploy1.yaml 
+  365  kubectl   get  deploy
+  366  kubectl  get  po 
+  367  kubectl  delete pod pod1 
+  368  kubectl  get  po 
+  369  kubectl  get  deploy
+  370  kubectl  get  po
+  371  kubectl  get  deploy
+  372  kubectl  get  no
+  373  kubectl  get  deploy
+  374  kubectl  scale  deployment ashu-deploy1  --replicas 2
+  375  kubectl  get  deploy
+  376  kubectl get po -o wide
+  377  kubectl  scale  deployment ashu-deploy1  --replicas 5
+  378  kubectl  get po 
+  379  kubectl  get po  -o wide
+  380  kubectl create ns ok --dry-run=client -o yaml 
+  381  kubectl  create service
+  382  kubectl  create service   clusterip  ashu-web-lb  --tcp  1234:80  --dry-run=client -o yaml 
+  383  kubectl  create service   clusterip  ashu-web-lb  --tcp  1234:80  --dry-run=client -o yaml >web_lb.yaml
+  384  kubectl  create -f web_lb.yaml 
+  385  kubectl  get service 
+  386  kubectl  get po 
+  387  kubectl  get  ep
+  388  kubectl  get deploy 
+  389  kubectl  create deploy  d1  --image=nginx --port 80 --replicas=3
+  390  kubectl  get deploy 
+  391  kubectl  get po --show-labels 
+  392  kubectl  get  service
+  393  kubectl  get  ep
+  394  kubectl  get po --show-labels 
+  395  kubectl replace -f web_lb.yaml --force
+  396  kubectl  get  svc
+  397  kubectl  get  ep
+  398  kubectl  get po -o wide
+  399  history 
+  400  kubectl delete deploy d1
+  401  kubectl  delete all --all
+  402  ls
+  403  kubectl   create  -f deploy1.yaml 
+  404  kubectl  get  deploy
+  405  kubectl  get  po 
+  406  kubectl  get  deploy
+  407  kubectl  expose  deployment  ashu-deploy1  --type ClusterIP --port 80 --name ashu-web-lb  --dry-run=client  -o yaml  >auto_web_lb.yaml 
+  408  kubectl  create -f auto_web_lb.yaml 
+  409  kubectl  get  service
+  410  kubectl  get  ep 
+  411  kubectl  get deploy 
+  412  kubectl  scale  deployment  ashu-deploy1 --replicas 2
+  413  kubectl  get deploy 
+  414  kubectl  get  po 
+  415  kubectl  scale  deployment  ashu-deploy1 --replicas 10
+  416  kubectl  get  po 
+  417  kubectl  scale  deployment  ashu-deploy1 --replicas 9
+  418  kubectl  scale  deployment  ashu-deploy1 --replicas 1
+  419  kubectl  create service
+  420  kubectl  get  svc
+  421  kubectl   delete svc  ashu-web-lb 
+  422  kubectl  get  svc
+  423  kubectl  get  deploy
+  424  kubectl  expose deployment ashu-deploy1 --type LoadBalancer --port 80 --name ashu-lb-inext --dry-run=client  -o yaml >int_ext_lb.yaml 
+  425  kubectl  create -f int_ext_lb.yaml 
+  426  kubectl  get  svc
+  427  kubectl  get  ep
+  428  kubectl  get  svc
+  429  kubectl  get  svc -o wide
+  430  kubectl  delete svc ashu-lb-inext 
+  431  kubectl  get svc -A
+  432  kubectl  delete all --all
+  433  cd ..
+  434  ls
+  435  cd  node-app/
+  436  docker-compose down 
+  437  docker-compose up -d --build 
+  438  docker-compose images
+  439  cd ..
+  440  ls
+  441  mkdir my-node-mongo-app
+  442  cd my-node-mongo-app/
+  443  ls
+  444  kubectl   create  deploy ashu-node  --image=extoaksashu.azurecr.io/node-app:v1   --port 3000 --dry-run=client -o yaml  >node_deploy.yaml 
+  445  ls
+  446  kubectl   create  -f  node_deploy.yaml 
+  447  kubectl  get  deploy
+  448  kubectl  get  pods
+  449  kubectl  describe pod ashu-node-7f4b64f677-bwlxw 
+  450  kubectl  get events 
+  451  ls
+  452  kubectl  create secret 
+  453  kubectl  create secret  docker-registry  ashu-reg-cred --docker-server extoaksashu.azurecr.io        --docker-username   extoaksashu   --docker-password="NRwjXeLhLbmBBQEzjeM0hWJKQIz53Xxqg6ji3RlzWl+ACRCev89b"  --dry-run=client -o yaml >az_secret.yaml 
+  454  ls
+  455  kubectl  create  -f  az_secret.yaml 
+  456  kubectl get secrets
+  457  history 
+  458  kubectl  apply -f node_deploy.yaml 
+  459  kubectl  get po
+  460  kubectl  apply -f node_deploy.yaml 
+  461  kubectl  get po
+  462  ls
+  463  kubectl  get  secret
+  464  kubectl   get deployments.apps 
+  465  kubectl  get  pods
+  466  kubectl  get  deploy
+  467  kubectl   expose deployment ashu-node --type LoadBalancer --port 80  --target-port 3000 --name ashu-node-lb --dry-run=client -o yaml >nodeapp_lb.yaml 
+  468  kubectl  create -f nodeapp_lb.yaml 
+  469  kubectl  get  svc
+  470  kubectl  get  ep
+  471  history 
+  472  kubectl  get  svc
+  473  ls
+  474  kubectl   create  deployment  ashu-mongo  --image=mongo  --port 27017  --dry-run=client -o yaml >mongo_db.yaml 
+  475  kubectl  create  secret
+  476  kubectl  create  secret generic  ashu-db-cred --from-literal my-user=ashu  --from-literal my-password="Hello@Ashu123" --dry-run=client -o yaml >db_cred.yaml 
+  477  cat db_cred.yaml 
+  478  kubectl  create -f db_cred.yaml 
+  479  kubectl  get  secret
+  480  history 
+  481  ls 
+  482  kubectl  create -f mongo_db.yaml 
+  483  kubectl  get deploy
+  484  kubectl  get po 
+  485  kubectl  get deploy
+  486  kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.3.0/deploy/static/provider/cloud/deploy.yaml
+  487  ls
+  488  kubectl  get  secret
+  489  kubectl  get  deploy
+  490  ls
+  491  kubectl  get  secret
+  492  kubectl  get  deploy
+  493  kubectl  get  svc
+  494  kubectl  get po -n kube-system 
+  495  kubectl  get  deploy 
+  496  kubectl   get  svc
+  497  kubectl  expose  deployment  ashu-mongo --type ClusterIP --port 27017 --name ashu-mongo-lb --dry-run=client -o yaml  >mongo_svc.yaml 
+  498  kubectl create -f mongo_svc.yaml 
+  499  kubectl  get  svc
+  500  kubectl  get  ep
+  501  kubectl  get  svc
+  502  kubectl   get  po -n kube-system 
+  503  kubectl  replace -f node_deploy.yaml --force
+  504  kubectl  get  deploy
+  505  kubectl  get  po 
+  506  kubectl  get deploy
+  507  kubectl  autoscale  deployment ashu-node   --min 2 --max 20 --cpu-percent 70 --dry-run=client -o yaml  >hpa.yaml 
+  508  kubectl create -f hpa.yaml 
+  509  kubectl  get hpa
+  510  kubectl  get deploy
+  511  history 
+  512  kubectl  get hpa
+  513  vim hpa.yaml 
+  514  kubectl replace -f hpa.yaml 
+  515  kubectl  get hpa
+  516  kubectl  get  svc
+  517  kubectl get hpa
+  518  kubectl get hpa -w
+  519  kubectl  get po
+  520  kubectl get hpa -w
+  521  ls
+  522  cd
+  523  ls
+  524  cd ashu-apps/node-app/
+  525  ls
+  526  docker-compose up -d --build 
+  527  docker-compose ps
+  528  docker-compose down 
+  529  docker-compose up -d --build 
+  530  docker-compose ps
+  531  docker-compose logs node-app-app-1
+  532  docker-compose logs node-app-mongo-1
+  533  docker-compose down
+  534  docker-compose up -d --build 
+  535  docker-compose ps
+  536  docker-compose down
+  537  docker-compose up -d --build 
+  538  docker-compose ps
+  539  ls
+  540  docker-compose down 
+  541  docker-compose up -d --build 
+  542  docker-compose ps
+  543  docker-compose down 
+  544  docker-compose up -d --build
+  545  docker-compose ps
+  546  docker-compose logs node-app-app-1 
+  547  docker-compose logs app
+  548  docker-compose down 
+  549  docker-compose up -d --build 
+  550  docker-compose down
+  551  docker-compose up -d --build 
+  552  docker-compose ps
+  553  docker-compose  logs mongo
+  554  docker-compose down 
+  555  docker-compose up -d --build 
+  556  docker-compose ps
+  557  docker-compose down 
+  558  docker-compose up -d --build 
+  559  docker-compose down 
+  560  docker-compose up -d --build 
+  561  docker-compose down 
+  562  docker-compose up -d --build 
+  563  docker-compose down 
+  564  docker-compose up -d --build 
+  565  docker-compose down 
+  566  docker-compose up -d --build 
+  567  docker-compose p
+  568  docker-compose up -d --build 
+  569  ls
+  570  cd ashu-apps/
+  571  ls
+  572  helm ls
+  573  helm repo ls
+  574  cd
+  575  ls
+  576  exiot
+  577  exit
+  578  kubectl  cluster-info 
+  579  cat   ~/.bashrc  
+  580  vim   ~/.bashrc  
+  581  source  ~/.bashrc 
+  582  kubectl  config get-contexts 
+  583  kubectl  delete all --all
+  584  kubectl  get secrets
+  585  kubectl  get  po 
+  586  kubectl  get  po  -A
+  587  kubectl  get  secret  -A
+  588  kubectl  get  secret  --all-namespaces 
+  589  history 
+  590  kubectl  get  all -n amit-projec
+  591  kubectl  get  all -n amit-project
+  592  kubectl  -n  amit-project  exec -it  amit-node-87886cfc5-2796b  -- bash 
+  593  history 
+  594  kubectl  delete all --all
+  595  ls  my-node-mongo-app/
+  596  kubectl  create  -f my-node-mongo-app/
+  597  kubectl  apply  -f my-node-mongo-app/
+  598  kubectl delete  -f my-node-mongo-app/
+  599  helm version 
+  600  helm repo ls
+  601  helm  repo  add  ashu-repo  https://charts.bitnami.com/bitnami
+  602  helm repo ls
+  603  helm  repo 
+  604  helm
+  605  helm repo ls
+  606  helm search  repo  ingress
+  607  helm repo add  ashu-monitor   https://prometheus-community.github.io/helm-charts 
+  608  helm repo ls
+  609  helm repo add  ashu-personal https://redashu.github.io/test-helm/
+  610  helm repo ls
+  611  helm search  repo  ingress
+  612  helm search  repo  nginx
+  613  helm repo ls
+  614  helm repo 
+  615  helm repo ls
+  616  helm search  repo  nginx
+  617  kubectl  get all
+  618  helm install  ashu-app  ashu-repo/nginx  
+  619  history 
+  620  helm  ls
+  621  kubectl  get deploy
+  622  kubectl   get po 
+  623  kubectl   get  svc
+  624  kubectl  get  ep
+  625  kubectl  get  secret
+  626  kubectl  get  hpa
+  627  history 
+  628  kubectl  get  secret
+  629  helm 
+  630  helm ls
+  631  helm uninstall ashu-app  
+  632  helm ls
+  633  kubectl  get  all
+  634  kubectl get svc -A
+  635  ls
+  636  cd helm-explore/
+  637  ls
+  638  helm create  ashu-webapp 
+  639  ls
+  640  ls  ashu-webapp/
+  641  ls
+  642  cd ashu-webapp/
+  643  ls
+  644  ls templates/
+  645  ls
+  646  cd ..
+  647  ls
+  648  mkdir  modify-helm-charts
+  649  ls
+  650  history 
+  651  ls
+  652  cd  modify-helm-charts/
+  653  ls
+  654  helm install  ashu-app  ashu-repo/nginx   --values values.yaml 
+  655  history 
+  656  helm ls
+  657  kubectl  get deploy
+  658  kubectl  get svc
+  659  ls
+  660  helm  ls
+  661  helm install  ashu-app  ashu-repo/nginx   --values values.yaml 
+  662  helm upgrade   ashu-app  ashu-repo/nginx   --values values.yaml 
+  663  helm  ls
+  664  history 
+  665  helm  ls
+  666  kubectl  get  deploy
+  667  kubectl  get  po 
+  668  kubectl  get  svc
+  669  kubectl  get  po 
+  670  kubectl   describe pod  ashu-app-nginx-5cb49957d8-f7rdk 
+  671  kubectl  get  po 
+  672  kubectl  describe pod ashu-app-nginx-75c6d758df-m2gwl
+  673  helm upgrade   ashu-app  ashu-repo/nginx   --values values.yaml 
+  674  helm  ls
+  675  kubectl  get  po 
+  676  kubectl  get  po -w
+  677  kubectl  get  po 
+  678  helm upgrade   ashu-app  ashu-repo/nginx   --values values.yaml 
+  679  helm ls
+  680  kubectl  get  po 
+  681  kubectl  describe pod  ashu-app-nginx-6c7c66758c-m8bfk
+  682  kubectl  logs ashu-app-nginx-6c7c66758c-m8bfk
+  683  helm upgrade   ashu-app  ashu-repo/nginx   --values values.yaml 
+  684  helm ls
+  685  kubectl  get  po
+  686  history 
+  687  helm ls
+  688  helm uninstall  ashu-app 
+  689  helm ls
+  690  kubectl  get svc -A
+  691  kubectl  delete all --all -n shal 
+  692  kubectl  delete all --all -n rahul-project 
+  693  helm ls
+  694  kubectl  delete all,secret  --all
+  695  history   | grep -i create  | grep -i secret
+  696  kubectl  create secret 
+  697  ls
+  698  cd ../
+  699  ls
+  700  cd ..
+  701  ls
+  702  cd tasks/
+  703  ls
+  704  kubectl  create secret generic   ashu-db-cred --from-env-file cred.env  --dry-run=client -o yaml 
+  705  kubectl  create secret generic   ashu-db-cred --from-env-file cred.env  --dry-run=client -o yaml >db_secret.yaml
+  706  kubectl create -f db_secret.yaml 
+  707  kubectl get  secret
+  708  kubectl  create deployment ashu-db --image=mysql  --dry-run=client -o yaml >db_deployment.yaml
+  709  history 
+  710  ls
+  711  kubectl  create -f db_deployment.yaml 
+  712  kubectl  get  deploy
+  713  kubectl  get po 
+  714  kubectl  get deploy
+  715  kubectl  expose deployment ashu-db --port 3306 --name db-lb --dry-run=client -o yaml >dbsvc.yaml
+  716  kubectl  create -f dbsvc.yaml 
+  717  kubectl  get secret
+  718  kubectl  get deploy
+  719  kubectl  get  po
+  720  kubectl  get  svc
+  721  kubectl  get  ep
+  722  kubectl  get po -A
+  723  kubectl  get secret   -A
+  724  kubectl  delete secret --all -n shal 
+  725  kubectl  delete secret --all -n megha-project 
+  726  kubectl  delete secret --all -n default 
+  727  kubectl  explain  pod
+  728  kubectl  explain  pod.apiVersion
+  729  kubectl  explain  pod.metadata
+  730  kubectl  explain  pod.spec.containers 
+  731  kubectl  explain  pod.spec.containers  | grep -i env
+  732  kubectl  explain  pod.spec.containers.envFrom 
+  733  kubectl  explain  pod.spec.containers.envFrom.secretRef 
+  734  git clone https://github.com/redashu/Mongo-Flask-Dashboard.git
+  735  cd Mongo-Flask-Dashboard/
+  736  ls
+  737  cat Dockerfile 
+  738  cat  docker-compose.yml 
+  739  docker-compose up -d --build 
+  740  docker-compose ps
+  741  docker-compose logs dashboard
+  742  ls
+  743  vim docker-compose.yml 
+  744  ls
+  745  vim  app.py 
+  746  clear
+  747  ls
+  748  docker-compose down 
+  749  kubectl explain pod.spec  | grep -i volu
+  750  kubectl explain deployment.spec.template.spec  | grep -i volu
+  751  kubectl explain statfulsets.spec.template.spec  | grep -i volu
+  752  kubectl explain statefulsets.spec.template.spec  | grep -i volu
+  753  kubectl explain statefulsets.spec  | grep -i volu
+  754  kubectl explain deployment.spec  | grep -i volu
+  755  cd
+  756  docker pull  mysql:8.0 
+  757  ls
+  758  kubectl  api-resources  
+  759  kubectl  explain   PersistentVolume.spec  | grep -i hostp
+  760  kubectl  explain   PersistentVolume.spec  | grep -i emp
+  761  kubectl  get  pvc -n shal 
+  762  kubectl  get  pvc -n arvind-project 
+  763  kubectl  get  pvc -n shal 
+  764  ls
+  765  cd Mongo-Flask-Dashboard/
+  766  ls
+  767  cat  docker-compose.yml 
+  768  cd
+  769  git clone git@github.com:redashu/exto360-aks.git
+  770  exit
+  771  cd tasks/mongo-task/
+  772  ls
+  773  kubectl create secret generic db-cred --from-env-file mongo-cred.env --dry-run=client -o yaml  >secret.yaml
+  774  kubectl  create -f secret.yaml 
+  775  kubectl  get secret
+  776  kubectl  create deployment ashu-mongo --image=mongo --port 27017 --dry-run=client -o yaml >deploy.yaml 
+  777  kubectl  create -f deploy.yaml 
+  778  kubectl  get  deploy
+  779  kubectl  get  po
+  780  kubectl  get  deploy
+  781  kubectl  expose deployment ashu-mongo --port 27017 --name mongo-svc --dry-run=client -o yaml >mongosvc.yaml 
+  782  kubectl create -f mongosvc.yaml 
+  783  kubectl  get svc
+  784  kubectl  get ep
+  785  history 
+  786  ls
+  787  helm create  ashu-mongo 
+  788  ls
+  789  cd ashu-mongo/
+  790  ls
+  791  ls templates/
+  792  rm -rf templates/hpa.yaml 
+  793  rm -rf templates/tests/
+  794  rm -rf templates/serviceaccount.yaml 
+  795  rm -rf templates/ingress.yaml 
+  796  ls templates/
+  797  cd..
+  798  ls
+  799  cd ..
+  800  ls
+  801  rm -rf ashu-mongo/
+  802  kubectl  delete all,secret  --all
+  803  ls
+  804  kubectl  delete all,secret --all
+  805  ls
+  806  helm create  exto-mongo 
+  807  ls 
+  808  cd exto-mongo/
+  809  ls
+  810  cd  templates/
+  811  ls
+  812  rm -rfv *.yaml 
+  813  ls
+  814  rm -rf tests/ 
+  815  ls
+  816  rm NOTES.txt 
+  817  cd ..
+  818  ls
+  819  tree  
+  820  cd ..
+  821  ls
+  822  cp -v *.yaml  exto-mongo/templates/
+  823  cd ..
+  824  ls
+  825  cd mongo-task/
+  826  ls
+  827  mkdir  /tmp/charts
+  828  mv exto-mongo  /tmp/charts/
+  829  ls /tmp/charts/
+  830  ls /tmp/charts/exto-mongo/
+  831  ls /tmp/charts/exto-mongo/templates/
+  832  tree  /tmp/charts/exto-mongo/
+  833  ls
+  834  cd  /
+  835  helm install  ashu-db  /tmp/charts/exto-mongo/
+  836  kubectl  get deploy
+  837  kubectl  get secret
+  838  kubectl  get sv 
+  839  kubectl  get svc
+  840  helm  ls
+  841  kubectl  get  deploy
+  842  kubectl  get  svc
+  843  kubectl  get  secret
+  844  kubectl  get  sc
+  845  helm ls
+  846  helm uninstall ashu-db
+  847  cd
+  848  ls
+  849  cd  ashu-apps/
+  850  ls
+  851  cd tasks/
+  852  ls
+  853  ls mongo-task/
+  854  mkdir  /tmp/common-yamls
+  855  cp -v  *.yaml  /tmp/common-yamls/
+  856  ls
+  857  cd  mongo-task/
+  858  ls
+  859  kubectl  create -f pv.yaml 
+  860  kubectl  get  pv
+  861  kubectl  create -f pvc.yaml 
+  862  kubectl  get  pvc
+  863  kubectl get pv
+  864  kubectl get pvc
+  865  ls
+  866  kubectl  create -f deploy.yaml 
+  867  kubectl  get  deploy
+  868  kubectl  get  po 
+  869  kubectl  logs ashu-mongo-7c9d5f9b8f-krvj2 
+  870  kubectl  replace -f deploy.yaml --force 
+  871  kubectl  get po
+  872  kubectl  describe pod ashu-mongo-6db4d6d676-gk4sq 
+  873  ls
+  874  kubectl  create -f secret.yaml 
+  875  kubectl  replace -f deploy.yaml --force 
+  876  kubectl  get po
+  877  history 
+  878  ls
+  879  docker  run -dit --name ashuc1  alpine 
+  880  docker  ps
+  881  docker inspect  ashuc1
+  882  docker  ps
+  883  docker  ps -a
+  884  kubectl  get po -A
+  885  helm ls
+  886  kubectl  delete all --all
+  887  mkdir  two-tier-micro-service
+  888  ls
+  889  cd node-rahul-mongo-microsvc/
+  890  ls
+  891  kubectl  create  deployment ui-app --image=extoaksashu.azurecr.io/rahuldevopsapp:20231028.7    --port  3008 --dry-run=client -o yaml >node-deploy.yaml 
+  892  ls
+  893  kubectl  create -f mongo-secret.yaml 
+  894  kubectl  get secret
+  895  kubectl create -f mongo-deploy.yaml 
+  896  kubectl  get po 
+  897  kubectl  get deploy 
+  898  kubectl  expose deployment ashu-mongo --type ClusterIP --port 27017   --name mongo-lb  --dry-run=client -o yaml >mongo-svc.yaml
+  899  kubectl  create -f mongo-svc.yaml 
+  900  kubectl  get  secret
+  901  kubectl  get  deploy
+  902  kubectl  get  svc
+  903  history   | grep -i azurecr
+  904  kubectl  create secret  docker-registry  ashu-reg-cred --docker-server extoaksashu.azurecr.io        --docker-username   extoaksashu   --docker-password="NRwjXeLhLbmBBQEzjeM0hWJKQIz53Xxqg6ji3RlzWl+ACRCev89b"  --dry-run=client -o yaml >az_secret.yaml 
+  905  kubectl  get secrets
+  906  kubectl create -f az_secret.yaml 
+  907  kubectl  get secrets
+  908  kubectl  create configmap  ashu-app-con --from-literal db_url=mongo-lb --dry-run=client -o yaml 
+  909  kubectl  create configmap  ashu-app-con --from-literal db_url=mongo-lb --dry-run=client -o yaml  >configmap.yaml 
+  910  kubectl  create -f configmap.yaml 
+  911  kubectl  get  svc
+  912  kubectl create -f node-deploy.yaml 
+  913  kubectl  get  deploy
+  914  kubectl  get  po
+  915  kubectl describe pod ui-app-6bdb6f77d8-hm6hg 
+  916  kubectl logs ashu-app-con
+  917  kubectl logs ui-app-6bdb6f77d8-hm6hg 
+  918  kubectl  get  svc
+  919  kubectl  replace -f configmap.yaml 
+  920  kubectl replace -f node-deploy.yaml --force
+  921  kubectl  get po
+  922  kubectl  expose deployment ui-app --type LoadBalancer --port 80 --target-port 3008 --name      node-lb --dry-run=client -o yaml  >svcnode.yaml 
+  923  kubectl  create -f svcnode.yaml 
+  924  kubectl  get svc
+  925  kubectl  get  ns
+  926  kubectl  get  svc -n ingress-nginx 
+  927  kubectl  get svc
+  928  history 
+  929  echo Redhat  | base64 -e
+  930  base64  -e
+  931  base64 
+  932  kubectl  replace -f configmap.yaml 
+  933  kubectl  replace -f node-deploy.yaml --force
+  934  kubectl  get po 
+  935  kubectl  logs ui-app-6bdb6f77d8-w9h9k 
+  936  kubectl  replace -f node-deploy.yaml --force
+  937  kubectl  get  po 
+  938  kubectl  get svc
+  939  kubectl  get ep
+  940  kubectl  get  po 
+  941  kubectl  logs ui-app-6bdb6f77d8-gnl2l 
+  942  kubectl  replace -f mongo-secret.yaml 
+  943  kubectl replace -f node-deploy.yaml --force
+  944  kubectl  get po
+  945  kubectl  logs ui-app-6bdb6f77d8-q2tfc 
+  946  kubectl  logs ui-app-6bdb6f77d8-q2tfc  -f
+  947  kubectl  create secret generic hhelo --from-literal x=Redhat --dry-run=client -o yaml
+  948  kubectl replace -f mongo-secret.yaml --force
+  949  kubectl  replace -f node-deploy.yaml --force 
+  950  kubectl  logs -f ui-app-6bdb6f77d8-l9k28 
+  951  kubectl  replace -f mongo-deploy.yaml --force 
+  952  kubectl  get po 
+  953  kubectl  replace -f node-deploy.yaml --force
+  954  kubectl  get po 
+  955  kubectl  logs -f ui-app-6bdb6f77d8-f9ffc 
+  956  kubectl  create secret generic hhelo --from-literal x=Redhat --dry-run=client -o yaml
+  957  kubectl  create secret generic hhelo --from-literal x=ashu --dry-run=client -o yaml
+  958  kubectl replace -f mongo-secret.yaml 
+  959  kubectl replace -f mongo-secret.yaml --force
+  960  kubectl  replace -f mongo-deploy.yaml --force
+  961  kubectl  replace -f node-deploy.yaml --force
+  962  kubectl  get po 
+  963  kubectl  get svc
+  964  kubectl  replace -f svcnode.yaml --force 
+  965  kubectl  get  svc
+  966  kubectl create -f  node-ingress.yaml 
+  967  kubectl  get  ing
+  968  kubectl  get  ing -w
+  969  history 
+  970  history   >historykubectl.txt
