@@ -12,3 +12,5 @@
 
 <img src="devops3.png">
 
+### azure devops understanding 
+
